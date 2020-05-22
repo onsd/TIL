@@ -7,10 +7,10 @@ entity UDCounter is
     port (
         clk		: in std_logic;
         reset	: in std_logic;
-        EN		: in std_logic;
+        EN		: in std_logic; 
         UD		: in std_logic;
         SET		: in std_logic;
-    	  Cin		: in std_logic_vector(3 downto 0);
+        Cin		: in std_logic_vector(3 downto 0);
         Cout	: inout std_logic_vector(3 downto 0);
         CB		: out std_logic
     );
@@ -26,15 +26,14 @@ begin
         elsif (clk'event and clk = '1') then
             if (SET = '1') then
                 Cout <= Cin;
-            -- elsif (EN = '1') then
             else
-                if (UD = '0') then  -- Up
+                if (UD = '0' and EN = '1') then  -- Up
                     if (Cout = "1001") then
                         Cout <= "0000";
                     else
                         Cout <= Cout + 1;
                     end if;
-                else  -- Down
+                elsif(UD = '1' and EN = '1') then -- Down
                     if (Cout = "0000") then
                         Cout <= "1001";
                     else

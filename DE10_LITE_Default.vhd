@@ -65,10 +65,27 @@ signal decode1 : std_logic_vector(7 downto 0);  -- Decoder
 signal decode2: std_logic_vector(7 downto 0);
 signal DLY_RST : std_logic;
 
+signal Cout0: std_logic_vector(3 downto 0);
 signal Cout1: std_logic_vector(3 downto 0);
-signal CB1: std_logic;
 signal Cout2: std_logic_vector(3 downto 0);
+signal Cout3: std_logic_vector(3 downto 0);
+signal Cout4: std_logic_vector(3 downto 0);
+signal Cout5: std_logic_vector(3 downto 0);
+
+signal CB0: std_logic;
+signal CB1: std_logic;
 signal CB2: std_logic;
+signal CB3: std_logic;
+signal CB4: std_logic;
+signal CB5: std_logic;
+
+signal Dout0: std_logic_vector(7 downto 0);
+signal Dout1: std_logic_vector(7 downto 0);
+signal Dout2: std_logic_vector(7 downto 0);
+signal Dout3: std_logic_vector(7 downto 0);
+signal Dout4: std_logic_vector(7 downto 0);
+signal Dout5: std_logic_vector(7 downto 0);
+
 
 component Reset_Delay is
 	port (
@@ -90,6 +107,13 @@ component UDCounter is
    );
 end component;
 
+component SegmentDecoder is
+    port (
+        Din		: in std_logic_vector(3 downto 0);
+        decode	: out std_logic_vector(7 downto 0)
+    );
+end component;	
+
 begin
 
 RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST); 
@@ -98,7 +122,7 @@ RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST);
 	LEDR(8 downto 0) <= SW(8 downto 0);
 	reset <= key(0);
 
--- Clock Generater 1 Second
+-- Clock Generater 0.01 Second
 	process(MAX10_CLK2_50, reset)
 	variable i : integer;
 	begin
@@ -106,7 +130,8 @@ RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST);
 			i := 0;
 			clk <= '0';
 		elsif (MAX10_CLK2_50'event and MAX10_CLK2_50 = '1') then
-			if (i < 25000000) then
+			-- if (i < 25000000) then
+			if (i < 2500000) then
 				i := i + 1;
 			else
 				i := 0;
@@ -120,72 +145,31 @@ RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST);
 	EN <= '1';  -- Enable=1(Up/Down)
 	UD <= SW(9);  -- Up/Down=0/1 
 	SET <= SW(8) ;  -- Set Initial Value=1
+
 	Cin <= SW(3 downto 0);  -- Countet In
 	LEDR(9) <= CB;  -- LED Display Carry/Borrow
 
-	C1: UDCounter port map (clk, reset, EN, UD, SET, Cin,  Cout1, CB1);
-	
--- component SegmentDecoder is
---     port (
---         Din		: in std_logic_cbvector(3 downto 0);
---         Dout	: out std_logic_vector(7 downto 0)
---     );
--- end component;	
+	C0: UDCounter port map (clk, reset, EN, UD, SET, Cin,  Cout0, CB0);
+	C1: UDCounter port map (clk, reset, CB0, UD, SET, Cin,  Cout1, CB1);
+	C2: UDCounter port map (clk, reset, CB1, UD, SET, Cin,  Cout2, CB2);
+	C3: UDCounter port map (clk, reset, CB2, UD, SET, Cin,  Cout3, CB3);
+	C4: UDCounter port map (clk, reset, CB3, UD, SET, Cin,  Cout4, CB4);
+	C5: UDCounter port map (clk, reset, CB4, UD, SET, Cin,  Cout5, CB5);
+
 	
 -- Decoder
-	process(Cout1)
-	begin
-		case Cout1 is
-			when "0000" => decode1 <= "11000000";
-			when "0001" => decode1 <= "11111001";
-			when "0010" => decode1 <= "10100100";
-			when "0011" => decode1 <= "10110000";
-			when "0100" => decode1 <= "10011001";
-			when "0101" => decode1 <= "10010010";
-			when "0110" => decode1 <= "10000010";
-			when "0111" => decode1 <= "11111000";
-			when "1000" => decode1 <= "10000000";
-			when "1001" => decode1 <= "10010000";
-			when "1010" => decode1 <= "00001000";
-			when "1011" => decode1 <= "00000011";
-			when "1100" => decode1 <= "01000110";
-			when "1101" => decode1 <= "00100001";
-			when "1110" => decode1 <= "00000110";
-			when "1111" => decode1 <= "00001110";
-			when others => decode1 <= "11111111";
-		end case;
-	end process;
--- End
-	-- Decoder
-	-- process(Cout2)
-	-- begin
-	-- 	case Cout2 is
-	-- 		when "0000" => decode2 <= "11000000";
-	-- 		when "0001" => decode2 <= "11111001";
-	-- 		when "0010" => decode2 <= "10100100";
-	-- 		when "0011" => decode2 <= "10110000";
-	-- 		when "0100" => decode2 <= "10011001";
-	-- 		when "0101" => decode2 <= "10010010";
-	-- 		when "0110" => decode2 <= "10000010";
-	-- 		when "0111" => decode2 <= "11111000";
-	-- 		when "1000" => decode2 <= "10000000";
-	-- 		when "1001" => decode2 <= "10010000";
-	-- 		when "1010" => decode2 <= "00001000";
-	-- 		when "1011" => decode2 <= "00000011";
-	-- 		when "1100" => decode2 <= "01000110";
-	-- 		when "1101" => decode2 <= "00100001";
-	-- 		when "1110" => decode2 <= "00000110";
-	-- 		when "1111" => decode2 <= "00001110";
-	-- 		when others => decode2 <= "11111111";
-	-- 	end case;
-	-- end process;
--- End
+	D0: SegmentDecoder port map(Cout0, Dout0);
+	D1: SegmentDecoder port map(Cout1, Dout1);
+	D2: SegmentDecoder port map(Cout2, Dout2);
+	D3: SegmentDecoder port map(Cout3, Dout3);
+	D4: SegmentDecoder port map(Cout4, Dout4);
+	D5: SegmentDecoder port map(Cout5, Dout5);
 	
-	HEX5 <= decode1;
-	HEX4 <= decode1;
-	HEX3 <= decode1;
-	HEX2 <= decode1;
-	HEX1 <= decode1;
-	HEX0 <= decode1;
+	HEX5 <= Dout5;
+	HEX4 <= Dout4;
+	HEX3 <= Dout3;
+	HEX2 <= Dout2;
+	HEX1 <= Dout1;
+	HEX0 <= Dout0;
 
 end RTL;
