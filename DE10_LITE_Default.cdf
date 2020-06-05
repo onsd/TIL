@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(10M50DAF484) Path("D:/ALTERA/DE10_LITE_Default/") File("DE10_LITE_Default.sof") MfrSpec(OpMask(1));
+		Device PartName(10M50DAF484) Path("Z:/School/LogicCircuitDesign/DE10_LITE_Default/") File("DE10_LITE_Default.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

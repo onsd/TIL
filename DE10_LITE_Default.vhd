@@ -151,10 +151,10 @@ RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST);
 
 	C0: UDCounter port map (clk, reset, EN, UD, SET, Cin,  Cout0, CB0);
 	C1: UDCounter port map (clk, reset, CB0, UD, SET, Cin,  Cout1, CB1);
-	C2: UDCounter port map (clk, reset, CB1, UD, SET, Cin,  Cout2, CB2);
-	C3: UDCounter port map (clk, reset, CB2, UD, SET, Cin,  Cout3, CB3);
-	C4: UDCounter port map (clk, reset, CB3, UD, SET, Cin,  Cout4, CB4);
-	C5: UDCounter port map (clk, reset, CB4, UD, SET, Cin,  Cout5, CB5);
+	C2: UDCounter port map (clk, reset, CB1 and CB0, UD, SET, Cin,  Cout2, CB2);
+	C3: UDCounter port map (clk, reset, CB2 and CB1 and CB0, UD, SET, Cin,  Cout3, CB3);
+	C4: UDCounter port map (clk, reset, CB3 and CB2 and CB1 and CB0, UD, SET, Cin,  Cout4, CB4);
+	C5: UDCounter port map (clk, reset, CB4 and CB3 and CB2 and CB1 and CB0, UD, SET, Cin,  Cout5, CB5);
 
 	
 -- Decoder

@@ -181,11 +181,11 @@ RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST);
 	end process;
 -- End
 	
-	HEX5 <= decode;
-	HEX4 <= decode;
-	HEX3 <= decode;
-	HEX2 <= decode;
-	HEX1 <= decode;
-	HEX0 <= decode;
+	HEX5 <= Dout5;
+	HEX4 <= Dout4;
+	HEX3 <= Dout3;
+	HEX2 <= Dout2;
+	HEX1 <= Dout1;
+	HEX0 <= Dout0;
 
 end RTL;
