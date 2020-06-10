@@ -59,11 +59,17 @@ end DE10_LITE_Default;
  
 architecture RTL of DE10_LITE_Default is
 signal clk, reset : std_logic;
-signal EN, SET, UD, CB : std_logic;  -- Enable, Set, Up/Down, Carry/Borrow
+signal START, SET, UD, CB : std_logic;  -- Enable, Set, Up/Down, Carry/Borrow
 signal Cin, Cout : std_logic_vector(3 downto 0);  -- Counter In/Out
 signal decode1 : std_logic_vector(7 downto 0);  -- Decoder
 signal decode2: std_logic_vector(7 downto 0);
 signal DLY_RST : std_logic;
+
+signal ChatteringOut0: std_logic;
+signal ChatteringOut1: std_logic;
+
+signal Switch0Out: std_logic;
+signal Switch1Out: std_logic;
 
 signal Cout0: std_logic_vector(3 downto 0);
 signal Cout1: std_logic_vector(3 downto 0);
@@ -94,6 +100,22 @@ component Reset_Delay is
 	);
 end component;
 
+component ChatteringButton is 
+    port (
+        clk : in std_logic;
+        Cin : in std_logic;
+        Cout: out std_logic
+    );
+end component;
+
+component Switch is 
+    port(
+        clk : in std_logic;
+        Cin: in std_logic;
+        Cout: out std_logic
+    );
+end component;
+
 component UDCounter is
    port (
 		clk		: in std_logic;
@@ -105,6 +127,19 @@ component UDCounter is
        	Cout	: out std_logic_vector(3 downto 0);
        	CB		: out std_logic
    );
+end component;
+
+component UD6Counter is 
+	port (
+		clk		: in std_logic;
+		reset	: in std_logic;
+		EN		: in std_logic;
+		UD		: in std_logic;
+		SET		: in std_logic;
+		Cin		: in std_logic_vector(3 downto 0);
+		Cout	: out std_logic_vector(3 downto 0);
+		CB		: out std_logic
+	);
 end component;
 
 component SegmentDecoder is
@@ -120,9 +155,10 @@ RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST);
 
 -- IO test
 	LEDR(8 downto 0) <= SW(8 downto 0);
-	reset <= key(0);
 
--- Clock Generater 0.01 Second
+
+
+-- Clock Generater 0.01 Second (10 ms)
 	process(MAX10_CLK2_50, reset)
 	variable i : integer;
 	begin
@@ -131,7 +167,7 @@ RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST);
 			clk <= '0';
 		elsif (MAX10_CLK2_50'event and MAX10_CLK2_50 = '1') then
 			-- if (i < 25000000) then
-			if (i < 2500000) then
+			if (i < 250000) then
 				i := i + 1;
 			else
 				i := 0;
@@ -140,23 +176,32 @@ RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST);
 		end if;
 	end process;
 
+	-- Chattering0: Chattering port map(clk, key(0), ChatteringOut0);
+	-- reset <=  ChatteringOut0;
+	reset <= '1';
+				
 -- component UDCounter
 -- Signal of Up/Down Counter	
-	EN <= '1';  -- Enable=1(Up/Down)
-	UD <= SW(9);  -- Up/Down=0/1 
-	SET <= SW(8) ;  -- Set Initial Value=1
-
-	Cin <= SW(3 downto 0);  -- Countet In
-	LEDR(9) <= CB;  -- LED Display Carry/Borrow
-
-	C0: UDCounter port map (clk, reset, EN, UD, SET, Cin,  Cout0, CB0);
-	C1: UDCounter port map (clk, reset, CB0, UD, SET, Cin,  Cout1, CB1);
-	C2: UDCounter port map (clk, reset, CB1 and CB0, UD, SET, Cin,  Cout2, CB2);
-	C3: UDCounter port map (clk, reset, CB2 and CB1 and CB0, UD, SET, Cin,  Cout3, CB3);
-	C4: UDCounter port map (clk, reset, CB3 and CB2 and CB1 and CB0, UD, SET, Cin,  Cout4, CB4);
-	C5: UDCounter port map (clk, reset, CB4 and CB3 and CB2 and CB1 and CB0, UD, SET, Cin,  Cout5, CB5);
-
+	Chattering0 : ChatteringButton port map(clk, key(1), ChatteringOut0);
+	S0: Switch port map(clk, key(1), Switch1Out);
+	START <= Switch1Out;  -- Enable=key(9)(Up/Down)
 	
+	UD <= '1';  -- Up/Down=0/1 
+	SET <= SW(8) ;  -- Set Initial Value=1
+	
+	Cin <= SW(3 downto 0);  -- Countet In
+	LEDR(9) <= Switch1Out;  -- LED Display Carry/Borrow
+
+	C0: UDCounter port map  (clk, reset, START, UD, SET, Cin,  Cout0, CB0);
+	C1: UDCounter port map  (clk, reset, CB0, UD, SET, Cin,  Cout1, CB1);
+	C2: UDCounter port map  (clk, reset, CB1 and CB0, UD, SET, Cin,  Cout2, CB2);
+	C3: UD6Counter port map (clk, reset, CB2 and CB1 and CB0, UD, SET, Cin,  Cout3, CB3);
+	C4: UDCounter port map  (clk, reset, CB3 and CB2 and CB1 and CB0, UD, SET, Cin,  Cout4, CB4);
+	C5: UDCounter port map  (clk, reset, CB4 and CB3 and CB2 and CB1 and CB0, UD, SET, Cin,  Cout5, CB5); 
+
+	-- TODO: 1. ストップできるカウンタをつくる DONE
+	-- TODO: 2. 時間をセットできるようにする
+	-- TODO: 3. チャタリングやる
 -- Decoder
 	D0: SegmentDecoder port map(Cout0, Dout0);
 	D1: SegmentDecoder port map(Cout1, Dout1);
