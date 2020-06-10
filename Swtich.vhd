@@ -6,6 +6,7 @@ use IEEE.std_logic_arith.all;
 entity Switch is 
     port(
         clk : in std_logic;
+        reset : in std_logic;
         Cin: in std_logic;
         Cout: out std_logic
     );
@@ -16,7 +17,11 @@ signal old_in: std_logic := '1';
 begin
     process(clk)
     begin
-        if (clk'event and clk = '1') then
+        if reset = '0' then
+            Cout <= '1';
+            old_in <= '1';
+        elsif (clk'event and clk = '1') then
+            -- 押下
             if(Cin = '0') then
                 old_in <= not old_in;
                 Cout <= old_in;
