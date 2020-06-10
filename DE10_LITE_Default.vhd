@@ -60,9 +60,8 @@ end DE10_LITE_Default;
 architecture RTL of DE10_LITE_Default is
 signal clk, reset : std_logic;
 signal START, SET, UD, CB : std_logic;  -- Enable, Set, Up/Down, Carry/Borrow
-signal Cin, Cout : std_logic_vector(3 downto 0);  -- Counter In/Out
-signal decode1 : std_logic_vector(7 downto 0);  -- Decoder
-signal decode2: std_logic_vector(7 downto 0);
+signal Cout, Zero : std_logic_vector(3 downto 0);  -- Counter In/Out
+signal Cin, decode1, decode2 : std_logic_vector(7 downto 0);  -- Decoder
 signal DLY_RST : std_logic;
 
 signal ChatteringOut0: std_logic;
@@ -91,6 +90,8 @@ signal Dout2: std_logic_vector(7 downto 0);
 signal Dout3: std_logic_vector(7 downto 0);
 signal Dout4: std_logic_vector(7 downto 0);
 signal Dout5: std_logic_vector(7 downto 0);
+signal UpperSet: std_logic_vector(3 downto 0);
+signal LowerSet: std_logic_vector(3 downto 0);
 
 
 component Reset_Delay is
@@ -149,12 +150,20 @@ component SegmentDecoder is
     );
 end component;	
 
+-- component BCDDecoder is
+-- 	port(
+-- 		Din:in std_logic_vector(7 downto 0);
+-- 		Upper : out std_logic_vector(3 downto 0);
+-- 		Lower : out std_logic_vector(3 downto 0)
+-- 	);
+-- end component;
+
 begin
 
 RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST); 
 
 -- IO test
-	LEDR(8 downto 0) <= SW(8 downto 0);
+	LEDR(7 downto 0) <= SW(7 downto 0);
 
 
 
@@ -182,26 +191,36 @@ RESETDelay: Reset_Delay port map (MAX10_CLK1_50, DLY_RST);
 				
 -- component UDCounter
 -- Signal of Up/Down Counter	
-	Chattering0 : ChatteringButton port map(clk, key(1), ChatteringOut0);
-	S0: Switch port map(clk, key(1), Switch1Out);
+	Chattering0 : ChatteringButton port map(clk, key(0), ChatteringOut0);
+	Chattering1 : ChatteringButton port map(clk, key(1), ChatteringOut1);
+
+	-- S0: Switch port map(clk, key(0), Switch0Out);
+	S1: Switch port map(clk, key(1), Switch1Out);
+
+	SET <= not ChatteringOut0 ;  -- Set Initial Value=1
 	START <= Switch1Out;  -- Enable=key(9)(Up/Down)
 	
 	UD <= '1';  -- Up/Down=0/1 
-	SET <= SW(8) ;  -- Set Initial Value=1
 	
-	Cin <= SW(3 downto 0);  -- Countet In
-	LEDR(9) <= Switch1Out;  -- LED Display Carry/Borrow
+	Cin <= SW(7 downto 0);  -- Countet In
+	UpperSet <= SW(7 downto 4);
+	LowerSet <= SW(3 downto 0);
+	LEDR(8) <= SET;
+	LEDR(9) <= START;  -- LED Display Carry/Borrow
 
-	C0: UDCounter port map  (clk, reset, START, UD, SET, Cin,  Cout0, CB0);
-	C1: UDCounter port map  (clk, reset, CB0, UD, SET, Cin,  Cout1, CB1);
-	C2: UDCounter port map  (clk, reset, CB1 and CB0, UD, SET, Cin,  Cout2, CB2);
-	C3: UD6Counter port map (clk, reset, CB2 and CB1 and CB0, UD, SET, Cin,  Cout3, CB3);
-	C4: UDCounter port map  (clk, reset, CB3 and CB2 and CB1 and CB0, UD, SET, Cin,  Cout4, CB4);
-	C5: UDCounter port map  (clk, reset, CB4 and CB3 and CB2 and CB1 and CB0, UD, SET, Cin,  Cout5, CB5); 
+	ZERO <= "0000";
+	-- B0: BCDDecoder port map(Cin, Dout_Lower, Dout_Upper);
+	C0: UDCounter port map  (clk, reset, START, UD, SET, ZERO, Cout0, CB0);
+	C1: UDCounter port map  (clk, reset, CB0, UD, SET, ZERO,  Cout1, CB1);
+	C2: UDCounter port map  (clk, reset, CB1 and CB0, UD, SET, ZERO,  Cout2, CB2);
+	C3: UD6Counter port map (clk, reset, CB2 and CB1 and CB0, UD, SET, ZERO,  Cout3, CB3);
+	C4: UDCounter port map  (clk, reset, CB3 and CB2 and CB1 and CB0, UD, SET, LowerSet,  Cout4, CB4);
+	C5: UDCounter port map  (clk, reset, CB4 and CB3 and CB2 and CB1 and CB0, UD, SET, UpperSet,  Cout5, CB5); 
 
 	-- TODO: 1. ストップできるカウンタをつくる DONE
 	-- TODO: 2. 時間をセットできるようにする
 	-- TODO: 3. チャタリングやる
+
 -- Decoder
 	D0: SegmentDecoder port map(Cout0, Dout0);
 	D1: SegmentDecoder port map(Cout1, Dout1);
