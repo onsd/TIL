@@ -12,7 +12,8 @@ entity UDCounter is
         SET		: in std_logic;
         Cin		: in std_logic_vector(3 downto 0);
         Cout	: inout std_logic_vector(3 downto 0);
-        CB		: out std_logic
+        CB		: out std_logic;
+        STOP: in std_logic
     );
 end UDCounter;
 
@@ -23,7 +24,10 @@ begin
     begin
         if (reset = '0') then
             Cout <= "0000";
+        elsif (STOP = '0') then
+            Cout <= Cout;
         elsif (clk'event and clk = '1') then
+
             if (SET = '1') then
                 Cout <= Cin;
             else

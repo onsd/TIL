@@ -9,57 +9,57 @@ USE IEEE.std_logic_arith.ALL;
 ENTITY DE10_LITE_Default IS
 	PORT (
 		-- CLOCK
-		ADC_CLK_10 		: IN std_logic;
-		MAX10_CLK1_50 	: IN std_logic;
-		MAX10_CLK2_50 	: IN std_logic;
+		ADC_CLK_10 : IN std_logic;
+		MAX10_CLK1_50 : IN std_logic;
+		MAX10_CLK2_50 : IN std_logic;
 		-- SDRAM
-		DRAM_ADDR 		: OUT std_logic_vector(12 DOWNTO 0);
-		DRAM_BA 		: OUT std_logic_vector(1 DOWNTO 0);
-		DRAM_CAS_N 		: OUT std_logic;
-		DRAM_CKE 		: OUT std_logic;
-		DRAM_CLK 		: OUT std_logic;
-		DRAM_CS_N 		: OUT std_logic;
-		DRAM_DQ 		: INOUT std_logic_vector(15 DOWNTO 0);
-		DRAM_LDQM 		: OUT std_logic;
-		DRAM_RAS_N 		: OUT std_logic;
-		DRAM_UDQM 		: OUT std_logic;
-		DRAM_WE_N 		: OUT std_logic;
+		DRAM_ADDR : OUT std_logic_vector(12 DOWNTO 0);
+		DRAM_BA : OUT std_logic_vector(1 DOWNTO 0);
+		DRAM_CAS_N : OUT std_logic;
+		DRAM_CKE : OUT std_logic;
+		DRAM_CLK : OUT std_logic;
+		DRAM_CS_N : OUT std_logic;
+		DRAM_DQ : INOUT std_logic_vector(15 DOWNTO 0);
+		DRAM_LDQM : OUT std_logic;
+		DRAM_RAS_N : OUT std_logic;
+		DRAM_UDQM : OUT std_logic;
+		DRAM_WE_N : OUT std_logic;
 		-- SEG7S
-		HEX0 			: OUT std_logic_vector(7 DOWNTO 0);
-		HEX1 			: OUT std_logic_vector(7 DOWNTO 0);
-		HEX2 			: OUT std_logic_vector(7 DOWNTO 0);
-		HEX3 			: OUT std_logic_vector(7 DOWNTO 0);
-		HEX4 			: OUT std_logic_vector(7 DOWNTO 0);
-		HEX5 			: OUT std_logic_vector(7 DOWNTO 0);
+		HEX0 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX1 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX2 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX3 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX4 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX5 : OUT std_logic_vector(7 DOWNTO 0);
 		-- KEY
-		KEY 			: IN std_logic_vector(1 DOWNTO 0);
+		KEY : IN std_logic_vector(1 DOWNTO 0);
 		-- LED
-		LEDR 			: OUT std_logic_vector(9 DOWNTO 0);
+		LEDR : OUT std_logic_vector(9 DOWNTO 0);
 		-- SW
-		SW 				: IN std_logic_vector(9 DOWNTO 0);
+		SW : IN std_logic_vector(9 DOWNTO 0);
 		-- VGA
-		VGA_B 			: OUT std_logic_vector(3 DOWNTO 0);
-		VGA_G 			: OUT std_logic_vector(3 DOWNTO 0);
-		VGA_HS 			: OUT std_logic;
-		VGA_R 			: OUT std_logic_vector(3 DOWNTO 0);
-		VGA_VS 			: OUT std_logic;
+		VGA_B : OUT std_logic_vector(3 DOWNTO 0);
+		VGA_G : OUT std_logic_vector(3 DOWNTO 0);
+		VGA_HS : OUT std_logic;
+		VGA_R : OUT std_logic_vector(3 DOWNTO 0);
+		VGA_VS : OUT std_logic;
 		-- Accelerometer
-		GSENSOR_INT 	: IN std_logic_vector(2 DOWNTO 1);
-		GSENSOR_CS_N 	: OUT std_logic;
-		GSENSOR_SCLK 	: OUT std_logic;
-		GSENSOR_SDI 	: INOUT std_logic;
-		GSENSOR_SDO 	: INOUT std_logic;
+		GSENSOR_INT : IN std_logic_vector(2 DOWNTO 1);
+		GSENSOR_CS_N : OUT std_logic;
+		GSENSOR_SCLK : OUT std_logic;
+		GSENSOR_SDI : INOUT std_logic;
+		GSENSOR_SDO : INOUT std_logic;
 		-- Arduino
-		ARDUINO_IO 		: INOUT std_logic_vector(15 DOWNTO 0);
+		ARDUINO_IO : INOUT std_logic_vector(15 DOWNTO 0);
 		ARDUINO_RESET_N : INOUT std_logic;
 		-- GPIO, GPIO connect to GPIO Default
-		GPIO 			: INOUT std_logic_vector(35 DOWNTO 0)
+		GPIO : INOUT std_logic_vector(35 DOWNTO 0)
 	);
 END DE10_LITE_Default;
 
 ARCHITECTURE RTL OF DE10_LITE_Default IS
 	SIGNAL clk, reset : std_logic;
-	SIGNAL START, SET, isSet, UD, CB : std_logic; -- Enable, Set, Up/Down, Carry/Borrow
+	SIGNAL START, SET, isSet, UD, CB, isStop : std_logic; -- Enable, Set, Up/Down, Carry/Borrow
 	SIGNAL Cout, Zero : std_logic_vector(3 DOWNTO 0); -- Counter In/Out
 	SIGNAL Cin, decode1, decode2 : std_logic_vector(7 DOWNTO 0); -- Decoder
 	SIGNAL DLY_RST : std_logic;
@@ -132,7 +132,8 @@ ARCHITECTURE RTL OF DE10_LITE_Default IS
 			SET : IN std_logic;
 			Cin : IN std_logic_vector(3 DOWNTO 0);
 			Cout : OUT std_logic_vector(3 DOWNTO 0);
-			CB : OUT std_logic
+			CB : OUT std_logic;
+			STOP : IN std_logic
 		);
 	END COMPONENT;
 
@@ -145,7 +146,8 @@ ARCHITECTURE RTL OF DE10_LITE_Default IS
 			SET : IN std_logic;
 			Cin : IN std_logic_vector(3 DOWNTO 0);
 			Cout : OUT std_logic_vector(3 DOWNTO 0);
-			CB : OUT std_logic
+			CB : OUT std_logic;
+			STOP : IN std_logic
 		);
 	END COMPONENT;
 
@@ -181,7 +183,8 @@ BEGIN
 		END IF;
 	END PROCESS;
 	reset <= NOT SW(9);
-
+	isStop <= NOT (CB0 AND CB1 AND CB2 AND CB3 AND CB4 AND CB5 AND '1');
+	
 	Chattering0 : ChatteringButton PORT MAP(clk, key(0), ChatteringOut0);
 	Chattering1 : ChatteringButton PORT MAP(clk, key(1), ChatteringOut1);
 
@@ -201,22 +204,22 @@ BEGIN
 	LEDR(9) <= START; -- LED Display Carry/Borrow
 
 	ZERO <= "0000";
-	C0 : UDCounter PORT MAP(clk, reset, START, isSET, SET, ZERO, Cout0, CB0);
+	C0 : UDCounter PORT MAP(clk, reset, START, isSET, SET, ZERO, Cout0, CB0, isStop);
 
 	EN1 <= CB0 AND START;
-	C1 : UDCounter PORT MAP(clk, reset, EN1, isSET, SET, ZERO, Cout1, CB1);
+	C1 : UDCounter PORT MAP(clk, reset, EN1, isSET, SET, ZERO, Cout1, CB1, isStop);
 
 	EN2 <= CB1 AND CB0 AND START;
-	C2 : UDCounter PORT MAP(clk, reset, EN2, isSET, SET, ZERO, Cout2, CB2);
+	C2 : UDCounter PORT MAP(clk, reset, EN2, isSET, SET, ZERO, Cout2, CB2, isStop);
 
 	EN3 <= CB2 AND CB1 AND CB0 AND START;
-	C3 : UD6Counter PORT MAP(clk, reset, EN3, isSET, SET, ZERO, Cout3, CB3);
+	C3 : UD6Counter PORT MAP(clk, reset, EN3, isSET, SET, ZERO, Cout3, CB3, isStop);
 
 	EN4 <= CB3 AND CB2 AND CB1 AND CB0 AND START;
-	C4 : UDCounter PORT MAP(clk, reset, EN4, isSET, SET, LowerSet, Cout4, CB4);
+	C4 : UDCounter PORT MAP(clk, reset, EN4, isSET, SET, LowerSet, Cout4, CB4, isStop);
 
 	EN5 <= CB4 AND CB3 AND CB2 AND CB1 AND CB0 AND START;
-	C5 : UDCounter PORT MAP(clk, reset, EN5, isSET, SET, UpperSet, Cout5, CB5);
+	C5 : UDCounter PORT MAP(clk, reset, EN5, isSET, SET, UpperSet, Cout5, CB5, isStop);
 
 	-- TODO: 1. ストップできるカウンタをつくる DONE
 	-- TODO: 2. 時間をセットできるようにする DONE
