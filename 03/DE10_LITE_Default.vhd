@@ -1,277 +1,277 @@
 -------------------------------------------------------
 -- Auto-generated module template: DE10_LITE_Default
 --
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;
- 
-entity DE10_LITE_Default is
-	port (
-	-- CLOCK
-		ADC_CLK_10 			: in std_logic;
-		MAX10_CLK1_50 		: in std_logic;
-		MAX10_CLK2_50 		: in std_logic;
-	-- SDRAM
-		DRAM_ADDR 			: out std_logic_vector(12 downto 0);
-		DRAM_BA 				: out std_logic_vector(1 downto 0);
-		DRAM_CAS_N 			: out std_logic;
-		DRAM_CKE 			: out std_logic;
-		DRAM_CLK 			: out std_logic;
-		DRAM_CS_N 			: out std_logic;
-		DRAM_DQ 				: inout std_logic_vector(15 downto 0);
-		DRAM_LDQM 			: out std_logic;
-		DRAM_RAS_N 			: out std_logic;
-		DRAM_UDQM 			: out std_logic;
-		DRAM_WE_N 			: out std_logic;
-	-- SEG7
-		HEX0 					: out std_logic_vector(7 downto 0);
-		HEX1 					: out std_logic_vector(7 downto 0);
-		HEX2 					: out std_logic_vector(7 downto 0);
-		HEX3					: out std_logic_vector(7 downto 0);
-		HEX4					: out std_logic_vector(7 downto 0);
-		HEX5 					: out std_logic_vector(7 downto 0);
-	-- KEY
-		KEY 					: in std_logic_vector(1 downto 0);
-	-- LED
-		LEDR 					: out std_logic_vector(9 downto 0);
-	-- SW
-		SW 					: in std_logic_vector(9 downto 0);
-	-- VGA
-		VGA_B 				: out std_logic_vector(3 downto 0);
-		VGA_G 				: out std_logic_vector(3 downto 0);
-		VGA_HS 				: out std_logic;
-		VGA_R 				: out std_logic_vector(3 downto 0);
-		VGA_VS 				: out std_logic;
-	-- Accelerometer
-		GSENSOR_INT 		: in std_logic_vector(2 downto 1);
-		GSENSOR_CS_N 		: out std_logic;	
-		GSENSOR_SCLK 		: out std_logic;
-		GSENSOR_SDI 		: inout std_logic;
-		GSENSOR_SDO 		: inout std_logic;
-	-- Arduino
-		ARDUINO_IO 			: inout std_logic_vector(15 downto 0);
-		ARDUINO_RESET_N 	: inout std_logic;
-	-- GPIO, GPIO connect to GPIO Default
-		GPIO 					: inout std_logic_vector(35 downto 0)
-    );
-end DE10_LITE_Default;
- 
-architecture RTL of DE10_LITE_Default is
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.std_logic_unsigned.ALL;
 
-component Reset_Delay is
-	port (
-		iCLK : in std_logic;
-		oRESET : out std_logic
+ENTITY DE10_LITE_Default IS
+	PORT (
+		-- CLOCK
+		ADC_CLK_10 : IN std_logic;
+		MAX10_CLK1_50 : IN std_logic;
+		MAX10_CLK2_50 : IN std_logic;
+		-- SDRAM
+		DRAM_ADDR : OUT std_logic_vector(12 DOWNTO 0);
+		DRAM_BA : OUT std_logic_vector(1 DOWNTO 0);
+		DRAM_CAS_N : OUT std_logic;
+		DRAM_CKE : OUT std_logic;
+		DRAM_CLK : OUT std_logic;
+		DRAM_CS_N : OUT std_logic;
+		DRAM_DQ : INOUT std_logic_vector(15 DOWNTO 0);
+		DRAM_LDQM : OUT std_logic;
+		DRAM_RAS_N : OUT std_logic;
+		DRAM_UDQM : OUT std_logic;
+		DRAM_WE_N : OUT std_logic;
+		-- SEG7
+		HEX0 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX1 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX2 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX3 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX4 : OUT std_logic_vector(7 DOWNTO 0);
+		HEX5 : OUT std_logic_vector(7 DOWNTO 0);
+		-- KEY
+		KEY : IN std_logic_vector(1 DOWNTO 0);
+		-- LED
+		LEDR : OUT std_logic_vector(9 DOWNTO 0);
+		-- SW
+		SW : IN std_logic_vector(9 DOWNTO 0);
+		-- VGA
+		VGA_B : OUT std_logic_vector(3 DOWNTO 0);
+		VGA_G : OUT std_logic_vector(3 DOWNTO 0);
+		VGA_HS : OUT std_logic;
+		VGA_R : OUT std_logic_vector(3 DOWNTO 0);
+		VGA_VS : OUT std_logic;
+		-- Accelerometer
+		GSENSOR_INT : IN std_logic_vector(2 DOWNTO 1);
+		GSENSOR_CS_N : OUT std_logic;
+		GSENSOR_SCLK : OUT std_logic;
+		GSENSOR_SDI : INOUT std_logic;
+		GSENSOR_SDO : INOUT std_logic;
+		-- Arduino
+		ARDUINO_IO : INOUT std_logic_vector(15 DOWNTO 0);
+		ARDUINO_RESET_N : INOUT std_logic;
+		-- GPIO, GPIO connect to GPIO Default
+		GPIO : INOUT std_logic_vector(35 DOWNTO 0)
 	);
-end component;
-component ClkGen is
-   generic (N : integer);
-   port (
-	   CLK, RESET : in std_logic;
-		CLKout : out std_logic
-	);
-end component;
-component UpDownCounter is
-   port (
-      CLK, RESET : in std_logic;
-      EN, UD, SET	: in std_logic;
-      Cin : in std_logic_vector(3 downto 0);
-      Cout : out std_logic_vector(3 downto 0);
-      CB : out std_logic
-   );
-end component;
-component SegmentDecoder is
-   port (
-      Din : in std_logic_vector(3 downto 0);
-      Dout : out std_logic_vector(7 downto 0)
-   );
-end component;	
-component MIPSnp is
-    port(
-        CLK, RESET : in std_logic;
-        PCOut : out std_logic_vector(7 downto 0)
-    );
-end component;
+END DE10_LITE_Default;
 
-signal DLY_RST : std_logic;
-signal clk, clk1, reset : std_logic;
-signal PC : std_logic_vector(7 downto 0);
-signal EN0, EN1, EN2, EN3, EN4, EN5 : std_logic;  -- Enable
-signal UD, SET : std_logic;  -- Up/Down, Set
-signal Cin : std_logic_vector(3 downto 0);  -- Counter In
-signal Cout0, Cout1, Cout2, Cout3, Cout4, Cout5 : std_logic_vector(3 downto 0);  -- Counter Out
-signal CB0, CB1, CB2, CB3, CB4, CB5 : std_logic;  -- Carry/Borrow
+ARCHITECTURE RTL OF DE10_LITE_Default IS
 
-begin
+	COMPONENT Reset_Delay IS
+		PORT (
+			iCLK : IN std_logic;
+			oRESET : OUT std_logic
+		);
+	END COMPONENT;
+	COMPONENT ClkGen IS
+		GENERIC (N : INTEGER);
+		PORT (
+			CLK, RESET : IN std_logic;
+			CLKout : OUT std_logic
+		);
+	END COMPONENT;
+	COMPONENT UpDownCounter IS
+		PORT (
+			CLK, RESET : IN std_logic;
+			EN, UD, SET : IN std_logic;
+			Cin : IN std_logic_vector(3 DOWNTO 0);
+			Cout : OUT std_logic_vector(3 DOWNTO 0);
+			CB : OUT std_logic
+		);
+	END COMPONENT;
+	COMPONENT SegmentDecoder IS
+		PORT (
+			Din : IN std_logic_vector(3 DOWNTO 0);
+			Dout : OUT std_logic_vector(7 DOWNTO 0)
+		);
+	END COMPONENT;
+	COMPONENT MIPSnp IS
+		PORT (
+			CLK, RESET : IN std_logic;
+			PCOut : OUT std_logic_vector(7 DOWNTO 0)
+		);
+	END COMPONENT;
 
--- Reset Delay
-RD0: Reset_Delay port map (MAX10_CLK1_50, DLY_RST); 
+	SIGNAL DLY_RST : std_logic;
+	SIGNAL clk, clk1, reset : std_logic;
+	SIGNAL PC : std_logic_vector(7 DOWNTO 0);
+	SIGNAL EN0, EN1, EN2, EN3, EN4, EN5 : std_logic; -- Enable
+	SIGNAL UD, SET : std_logic; -- Up/Down, Set
+	SIGNAL Cin : std_logic_vector(3 DOWNTO 0); -- Counter In
+	SIGNAL Cout0, Cout1, Cout2, Cout3, Cout4, Cout5 : std_logic_vector(3 DOWNTO 0); -- Counter Out
+	SIGNAL CB0, CB1, CB2, CB3, CB4, CB5 : std_logic; -- Carry/Borrow
 
--- Reset
-	reset <= KEY(0) and DLY_RST;
+BEGIN
 
--- Clock Generater at 1s(25000000)
-CG0: ClkGen generic map (25000000) port map (MAX10_CLK1_50, reset, clk1);
-   clk <= clk1;
-	
--- MIPS Non Pipeline	(Assignments>Settings>Files Add Components)
-MIPSnp0: MIPSnp port map (clk, reset, PC);
+	-- Reset Delay
+	RD0 : Reset_Delay PORT MAP(MAX10_CLK1_50, DLY_RST);
 
-	LEDR(7 downto 0) <= PC;
-	LEDR(8) <= KEY(1);	
-	
--- Signal of Up/Down Counter	
-	EN0 <= '1';  -- Enable=1(Up/Down)
-	EN1 <= CB0;  -- 9
-	EN2 <= CB1 and EN1;  -- 99
-	EN3 <= CB2 and EN2;  -- 999
-	EN4 <= CB3 and EN3;  -- 9999
-	EN5 <= CB4 and EN4;  -- 99999
-	UD <= SW(9);  -- Up/Down=0/1
-	SET <= SW(8) ;  -- Set Initial Value=1
-	Cin <= SW(3 downto 0);  -- Countet In
-	LEDR(9) <= CB0;  -- LED Display Carry/Borrow
+	-- Reset
+	reset <= KEY(0) AND DLY_RST;
 
--- Up/Down Counter 0 to 999999
-UDC0: UpDownCounter port map (clk, reset, EN0, UD, SET, Cin, Cout0, CB0);
-UDC1: UpDownCounter port map (clk, reset, EN1, UD, SET, Cin, Cout1, CB1);
-UDC2: UpDownCounter port map (clk, reset, EN2, UD, SET, Cin, Cout2, CB2);
-UDC3: UpDownCounter port map (clk, reset, EN3, UD, SET, Cin, Cout3, CB3);
-UDC4: UpDownCounter port map (clk, reset, EN4, UD, SET, Cin, Cout4, CB4);
-UDC5: UpDownCounter port map (clk, reset, EN5, UD, SET, Cin, Cout5, CB5);
+	-- Clock Generater at 1s(25000000)
+	CG0 : ClkGen GENERIC MAP(25000000) PORT MAP(MAX10_CLK1_50, reset, clk1);
+	clk <= clk1;
 
--- HEX Segment Display
-HSD0: SegmentDecoder port map (Cout0, HEX0);
-HSD1: SegmentDecoder port map (Cout1, HEX1);
-HSD2: SegmentDecoder port map (Cout2, HEX2);
-HSD3: SegmentDecoder port map (Cout3, HEX3);
-HSD4: SegmentDecoder port map (Cout4, HEX4);
-HSD5: SegmentDecoder port map (Cout5, HEX5);
+	-- MIPS Non Pipeline	(Assignments>Settings>Files Add Components)
+	MIPSnp0 : MIPSnp PORT MAP(clk, reset, PC);
 
-end RTL;
+	LEDR(7 DOWNTO 0) <= PC;
+	LEDR(8) <= KEY(1);
+
+	-- Signal of Up/Down Counter	
+	EN0 <= '1'; -- Enable=1(Up/Down)
+	EN1 <= CB0; -- 9
+	EN2 <= CB1 AND EN1; -- 99
+	EN3 <= CB2 AND EN2; -- 999
+	EN4 <= CB3 AND EN3; -- 9999
+	EN5 <= CB4 AND EN4; -- 99999
+	UD <= SW(9); -- Up/Down=0/1
+	SET <= SW(8); -- Set Initial Value=1
+	Cin <= SW(3 DOWNTO 0); -- Countet In
+	LEDR(9) <= CB0; -- LED Display Carry/Borrow
+
+	-- Up/Down Counter 0 to 999999
+	UDC0 : UpDownCounter PORT MAP(clk, reset, EN0, UD, SET, Cin, Cout0, CB0);
+	UDC1 : UpDownCounter PORT MAP(clk, reset, EN1, UD, SET, Cin, Cout1, CB1);
+	UDC2 : UpDownCounter PORT MAP(clk, reset, EN2, UD, SET, Cin, Cout2, CB2);
+	UDC3 : UpDownCounter PORT MAP(clk, reset, EN3, UD, SET, Cin, Cout3, CB3);
+	UDC4 : UpDownCounter PORT MAP(clk, reset, EN4, UD, SET, Cin, Cout4, CB4);
+	UDC5 : UpDownCounter PORT MAP(clk, reset, EN5, UD, SET, Cin, Cout5, CB5);
+
+	-- HEX Segment Display
+	HSD0 : SegmentDecoder PORT MAP(Cout0, HEX0);
+	HSD1 : SegmentDecoder PORT MAP(Cout1, HEX1);
+	HSD2 : SegmentDecoder PORT MAP(Cout2, HEX2);
+	HSD3 : SegmentDecoder PORT MAP(Cout3, HEX3);
+	HSD4 : SegmentDecoder PORT MAP(Cout4, HEX4);
+	HSD5 : SegmentDecoder PORT MAP(Cout5, HEX5);
+
+END RTL;
 
 -- Component
 
 -- Clock Generater
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.std_logic_unsigned.ALL;
 
-entity ClkGen is
-   generic (N : integer := 25000000);  -- 1s
-   port (
-	   CLK, RESET : in std_logic;
-		CLKout : out std_logic
+ENTITY ClkGen IS
+	GENERIC (N : INTEGER := 25000000); -- 1s
+	PORT (
+		CLK, RESET : IN std_logic;
+		CLKout : OUT std_logic
 	);
-end ClkGen;
+END ClkGen;
 
-architecture RTL of ClkGen is
-signal c : std_logic;
-begin
-	process(CLK, RESET)
-	variable i : integer;
-	begin
-		if (RESET = '0') then
+ARCHITECTURE RTL OF ClkGen IS
+	SIGNAL c : std_logic;
+BEGIN
+	PROCESS (CLK, RESET)
+		VARIABLE i : INTEGER;
+	BEGIN
+		IF (RESET = '0') THEN
 			i := 0;
 			c <= '0';
-		elsif (CLK'event and CLK = '1') then
-			if (i < N) then
+		ELSIF (CLK'event AND CLK = '1') THEN
+			IF (i < N) THEN
 				i := i + 1;
-			else
+			ELSE
 				i := 0;
-				c <= not c;
-			end if;
-		end if;
-	end process;
+				c <= NOT c;
+			END IF;
+		END IF;
+	END PROCESS;
 	CLKout <= c;
-end RTL;
+END RTL;
 
 -- UpDownCounter
 
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.std_logic_unsigned.ALL;
 
-entity UpDownCounter is
-   port (
-      CLK, RESET : in std_logic;
-      EN, UD, SET	: in std_logic;
-      Cin : in std_logic_vector(3 downto 0);
-      Cout : out std_logic_vector(3 downto 0);
-      CB : out std_logic
-   );
-end UpDownCounter;
+ENTITY UpDownCounter IS
+	PORT (
+		CLK, RESET : IN std_logic;
+		EN, UD, SET : IN std_logic;
+		Cin : IN std_logic_vector(3 DOWNTO 0);
+		Cout : OUT std_logic_vector(3 DOWNTO 0);
+		CB : OUT std_logic
+	);
+END UpDownCounter;
 
-architecture RTL of UpDownCounter is
-signal c : std_logic_vector(3 downto 0);
-begin
--- Up/Down Counter with Carry/Borrow and Enable
-	process(CLK, RESET)
-	begin
-		if (RESET = '0') then
+ARCHITECTURE RTL OF UpDownCounter IS
+	SIGNAL c : std_logic_vector(3 DOWNTO 0);
+BEGIN
+	-- Up/Down Counter with Carry/Borrow and Enable
+	PROCESS (CLK, RESET)
+	BEGIN
+		IF (RESET = '0') THEN
 			c <= "0000";
-		elsif (CLK'event and CLK = '1') then
-			if (SET = '1') then
+		ELSIF (CLK'event AND CLK = '1') THEN
+			IF (SET = '1') THEN
 				c <= Cin;
-			elsif (EN = '1') then
-				if (UD = '0') then  -- Up
-					if (c = "1001") then
+			ELSIF (EN = '1') THEN
+				IF (UD = '0') THEN -- Up
+					IF (c = "1001") THEN
 						c <= "0000";
-					else
+					ELSE
 						c <= c + 1;
-					end if;
-				else  -- Down
-					if (c = "0000") then
+					END IF;
+				ELSE -- Down
+					IF (c = "0000") THEN
 						c <= "1001";
-					else
+					ELSE
 						c <= c - 1;
-					end if;
-				end if;
-			end if;
-		end if;
-	end process;
+					END IF;
+				END IF;
+			END IF;
+		END IF;
+	END PROCESS;
 	Cout <= c;
 	-- Carry/Borrow
-	CB <= '1' when (UD = '0') and (c = "1001") else  -- Up Carry
-         '1' when (UD = '1') and (c = "0000") else  -- Down Borrow
-         '0';
-end RTL;
+	CB <= '1' WHEN (UD = '0') AND (c = "1001") ELSE -- Up Carry
+		'1' WHEN (UD = '1') AND (c = "0000") ELSE -- Down Borrow
+		'0';
+END RTL;
 
 -- Segment Decoder
 
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;
- 
-entity SegmentDecoder is
-	port (
-		Din : in std_logic_vector(3 downto 0);
-		Dout : out std_logic_vector(7 downto 0)
-    );
-end SegmentDecoder;
- 
-architecture RTL of SegmentDecoder is
-begin	
-	process(Din)
-	begin
-		case Din is
-			when "0000" => Dout <= "11000000";  -- 0
-			when "0001" => Dout <= "11111001";  -- 1
-			when "0010" => Dout <= "10100100";  -- 2
-			when "0011" => Dout <= "10110000";  -- 3
-			when "0100" => Dout <= "10011001";  -- 4
-			when "0101" => Dout <= "10010010";  -- 5
-			when "0110" => Dout <= "10000010";  -- 6
-			when "0111" => Dout <= "11111000";  -- 7
-			when "1000" => Dout <= "10000000";  -- 8
-			when "1001" => Dout <= "10010000";  -- 9
-			when "1010" => Dout <= "00001000";  -- A.
-			when "1011" => Dout <= "00000011";  -- b.
-			when "1100" => Dout <= "01000110";  -- C.
-			when "1101" => Dout <= "00100001";  -- d.
-			when "1110" => Dout <= "00000110";  -- E.
-			when "1111" => Dout <= "00001110";  -- F.
-			when others => Dout <= "11111111";  -- No Disp
-		end case;
-	end process;
-end RTL;
+LIBRARY IEEE;
+USE IEEE.std_logic_1164.ALL;
+USE IEEE.std_logic_unsigned.ALL;
+
+ENTITY SegmentDecoder IS
+	PORT (
+		Din : IN std_logic_vector(3 DOWNTO 0);
+		Dout : OUT std_logic_vector(7 DOWNTO 0)
+	);
+END SegmentDecoder;
+
+ARCHITECTURE RTL OF SegmentDecoder IS
+BEGIN
+	PROCESS (Din)
+	BEGIN
+		CASE Din IS
+			WHEN "0000" => Dout <= "11000000"; -- 0
+			WHEN "0001" => Dout <= "11111001"; -- 1
+			WHEN "0010" => Dout <= "10100100"; -- 2
+			WHEN "0011" => Dout <= "10110000"; -- 3
+			WHEN "0100" => Dout <= "10011001"; -- 4
+			WHEN "0101" => Dout <= "10010010"; -- 5
+			WHEN "0110" => Dout <= "10000010"; -- 6
+			WHEN "0111" => Dout <= "11111000"; -- 7
+			WHEN "1000" => Dout <= "10000000"; -- 8
+			WHEN "1001" => Dout <= "10010000"; -- 9
+			WHEN "1010" => Dout <= "00001000"; -- A.
+			WHEN "1011" => Dout <= "00000011"; -- b.
+			WHEN "1100" => Dout <= "01000110"; -- C.
+			WHEN "1101" => Dout <= "00100001"; -- d.
+			WHEN "1110" => Dout <= "00000110"; -- E.
+			WHEN "1111" => Dout <= "00001110"; -- F.
+			WHEN OTHERS => Dout <= "11111111"; -- No Disp
+		END CASE;
+	END PROCESS;
+END RTL;
