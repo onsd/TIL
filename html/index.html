@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+　<title>グラフ</title> 
+</head>
+<body>
+  <h1>折れ線グラフ</h1>
+  
+  <canvas id="myLineChart1"　width="200" height="150"></canvas>
+  <canvas id="myLineChart2"　width="200" height="150"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://assets.shiftr.io/js/mqtt-2.9.0.js"></script>
+
+
+  <script>
+
+        let chartData1 = {
+            type: 'line',
+            data: {
+                labels: [1,2,3,4],
+                datasets: [{
+                    label: "温度",
+                    data: [4,3,2,1],
+                    backgroundColor: 'rgba(216, 226, 220,0.2)',
+                    borderColor: 'rgba(216, 226, 220,1)',
+                    pointBackgroundColor: 'rgba(216, 226, 220,1)',
+                    yAxisID: "y-axis-1",
+                },
+                {
+                    label: "湿度",
+                    data: [4,3,2,1],
+                    backgroundColor: 'rgba(244, 172, 183,0.2)',
+                    borderColor: 'rgba(244, 172, 183,1)',
+                    pointBackgroundColor: 'rgba(244, 172, 183,1)',
+                    yAxisID: "y-axis-2",
+                },
+            ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                yAxes: [{
+                    id: "y-axis-1",   // 温度
+                    type: "linear",   // linear固定
+                    position: "left", // どちら側に表示される軸か？
+                    ticks: {          // スケール
+                        max: 50,
+                        min: 10,
+                        stepSize: 10
+                    },
+                },
+                {
+                    id: "y-axis-2", //湿度
+                    type: "linear",
+                    position: "right",
+                    ticks: {
+                        max: 100,
+                        min: 0,
+                        stepSize: 10
+                    },
+                }
+                ],
+                }
+            }
+        }
+
+        let chartData2 = {
+            type: 'line',
+            data: {
+                labels: [1,2,3,4],
+                datasets: [
+                {
+                    label: "照度",
+                    data: [4,3,2,1],
+                    backgroundColor: 'rgba(255, 202, 212,0.2)',
+                    borderColor: 'rgba(255, 202, 212,1)',
+                    pointBackgroundColor: 'rgba(255, 202, 212,1)',
+                    yAxisID: "y-axis-1",
+                },
+                {
+                    label: "土の湿度",
+                    data: [4,3,2,1],
+                    backgroundColor: 'rgba(255, 229, 217,0.2)',
+                    borderColor: 'rgba(255, 229, 217,1)',
+                    pointBackgroundColor: 'rgba(255, 229, 217,1)',
+                    yAxisID: "y-axis-1",
+                }
+            ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                yAxes: [{
+                    id: "y-axis-1",   // 温度
+                    type: "linear",   // linear固定
+                    position: "left", // どちら側に表示される軸か？
+                    ticks: {          // スケール
+                        max: 500,
+                        min: 10,
+                        stepSize: 50
+                    },
+                },
+                {
+                    id: "y-axis-2", //湿度
+                    type: "linear",
+                    position: "right",
+                    ticks: {
+                        max: 100,
+                        min: 0,
+                        stepSize: 10
+                    },
+                }
+                ],
+                }
+            }
+        }
+        
+        var ctx = document.getElementById("myLineChart1").getContext("2d");
+        ctx.width=window.innerWidth*1;
+        ctx.height=window.innerHeight*0.5;
+        const lineChart1 = new Chart(ctx, chartData1);
+        var ctx = document.getElementById("myLineChart2").getContext("2d");
+        ctx.width=window.innerWidth*1;
+        ctx.height=window.innerHeight*0.5;
+        const lineChart2 = new Chart(ctx, chartData2);
+
+        const client = mqtt.connect('mqtt://16276edb:3bae86e0b5f8ae36@broker.shiftr.io', {
+            clientId: 'javascript'
+        })
+
+        client.on('connect', function(){
+            console.log('client has connected!');
+        
+            client.subscribe('/hello');
+            // client.unsubscribe('/example');
+        
+            // setInterval(function(){
+            //     client.publish('/example', 'world');
+            // }, 1000);
+        });
+        
+        client.on('message', function(topic, message) {
+            const recivedJSON = JSON.parse(message.toString())
+            console.log('new message:', topic, recivedJSON);
+            if(chartData1.data.labels.length > 20){
+                chartData1.data.labels.shift()
+                chartData1.data.datasets[0].data.shift()
+                chartData1.data.datasets[1].data.shift()
+            }
+            chartData1.data.labels.push(chartData1.data.labels.slice(-1)[0] + 1)
+            chartData1.data.datasets[0].data.push(recivedJSON.temperature)
+            chartData1.data.datasets[1].data.push(recivedJSON.moisture)
+
+            if(chartData2.data.labels.length > 20){
+                chartData2.data.labels.shift()
+                chartData2.data.datasets[0].data.shift()
+                chartData2.data.datasets[1].data.shift()
+            }
+            chartData2.data.labels.push(chartData2.data.labels.slice(-1)[0] + 1)
+            chartData2.data.datasets[0].data.push(recivedJSON.lightValue)
+            chartData2.data.datasets[1].data.push(recivedJSON.humidity)
+
+            lineChart1.update();
+            lineChart2.update();
+
+        });
+
+ 
+  </script>
+</body>
+
+</html>
