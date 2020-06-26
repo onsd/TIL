@@ -89,7 +89,10 @@ ARCHITECTURE RTL OF DE10_LITE_Default IS
 	COMPONENT MIPSnp IS
 		PORT (
 			CLK, RESET : IN std_logic;
-			PCOut : OUT std_logic_vector(7 DOWNTO 0)
+			PCOut : OUT std_logic_vector(7 DOWNTO 0);
+			EN : in std_logic;
+			RegN: out std_logic_vector(2 downto 0);
+			RegD: out std_logic_vector(15 downto 0)
 		);
 	END COMPONENT;
 
@@ -102,6 +105,8 @@ ARCHITECTURE RTL OF DE10_LITE_Default IS
 	SIGNAL Cout0, Cout1, Cout2, Cout3, Cout4, Cout5 : std_logic_vector(3 DOWNTO 0); -- Counter Out
 	SIGNAL CB0, CB1, CB2, CB3, CB4, CB5 : std_logic; -- Carry/Borrow
 
+	SIGNAL RegN: std_logic_vector(2 downto 0);
+	SIGNAL RegD: std_logic_vector(15 downto 0);
 BEGIN
 
 	-- Reset Delay
@@ -114,14 +119,12 @@ BEGIN
 	CG0 : ClkGen GENERIC MAP(25000000) PORT MAP(MAX10_CLK1_50, reset, clk1);
 	clk <= clk1;
 
-	-- MIPS Non Pipeline	(Assignments>Settings>Files Add Components)
-	MIPSnp0 : MIPSnp PORT MAP(clk, reset, PC);
 
 	LEDR(7 DOWNTO 0) <= PC;
 	LEDR(8) <= KEY(1);
 
 	-- Signal of Up/Down Counter	
-	EN0 <= '1'; -- Enable=1(Up/Down)
+	EN0 <= '0'; -- Enable=1(Up/Down)
 	EN1 <= CB0; -- 9
 	EN2 <= CB1 AND EN1; -- 99
 	EN3 <= CB2 AND EN2; -- 999
@@ -131,6 +134,9 @@ BEGIN
 	SET <= SW(8); -- Set Initial Value=1
 	Cin <= SW(3 DOWNTO 0); -- Countet In
 	LEDR(9) <= CB0; -- LED Display Carry/Borrow
+
+	-- MIPS Non Pipeline	(Assignments>Settings>Files Add Components)
+	MIPSnp0 : MIPSnp PORT MAP(clk, reset, PC, EN0, RegN, RegD);
 
 	-- Up/Down Counter 0 to 999999
 	UDC0 : UpDownCounter PORT MAP(clk, reset, EN0, UD, SET, Cin, Cout0, CB0);

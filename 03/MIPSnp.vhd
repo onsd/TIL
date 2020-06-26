@@ -7,7 +7,11 @@ use IEEE.std_logic_unsigned.all;
 entity MIPSnp is
     port(
         CLK, RESET : in std_logic;
-        PCOut : out std_logic_vector(7 downto 0)
+        PCOut : out std_logic_vector(7 downto 0);
+        -- add ports
+        EN : in std_logic;
+        RegN: out std_logic_vector(2 downto 0);
+        RegD: out std_logic_vector(15 downto 0)
     );
 end MIPSnp;
 
@@ -101,13 +105,15 @@ begin
         if (RESET = '0') then
             pc <= (others => '0');
         elsif (CLK'event and CLK = '1') then
-            sel := (pc4addrSel and ALUZero) & addrSel & rASel;
-            case (sel) is
-                when "100" => pc <= pc4 + (imm(29 downto 0) & "00");  -- beg
-                when "010" => pc <= "0000" & addr & "00";  -- j, jal
-                when "001" => pc <= rA;  -- jr
-                when others => pc <= pc4;
-            end case;
+            if (EN = '1') then
+                sel := (pc4addrSel and ALUZero) & addrSel & rASel;
+                case (sel) is
+                    when "100" => pc <= pc4 + (imm(29 downto 0) & "00");  -- beg
+                    when "010" => pc <= "0000" & addr & "00";  -- j, jal
+                    when "001" => pc <= rA;  -- jr
+                    when others => pc <= pc4;
+                end case;
+            end if;
         end if;
     end process;
 
