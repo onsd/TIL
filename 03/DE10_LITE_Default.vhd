@@ -95,6 +95,14 @@ ARCHITECTURE RTL OF DE10_LITE_Default IS
 			RegD: out std_logic_vector(15 downto 0)
 		);
 	END COMPONENT;
+	COMPONENT Switch is
+		PORT (
+			clk: in std_logic;
+			reset : in std_logic;
+			Cin: in std_logic;
+			Cout: out std_logic
+		);
+	END COMPONENT;
 
 	SIGNAL DLY_RST : std_logic;
 	SIGNAL clk, clk1, reset : std_logic;
@@ -103,11 +111,12 @@ ARCHITECTURE RTL OF DE10_LITE_Default IS
 	SIGNAL UD, SET : std_logic; -- Up/Down, Set
 	SIGNAL Cin : std_logic_vector(3 DOWNTO 0); -- Counter In
 	SIGNAL Cout0, Cout1, Cout2, Cout3, Cout4, Cout5 : std_logic_vector(3 DOWNTO 0); -- Counter Out
-	SIGNAL CB0, CB1, CB2, CB3, CB4, CB5 : std_logic; -- Carry/Borrow
+	SIGNAL CB0, CB1, CB2, CB3, CB4, CB5, S0 : std_logic; -- Carry/Borrow
 
 	SIGNAL RegN: std_logic_vector(2 downto 0);
 	SIGNAL RegD: std_logic_vector(15 downto 0);
 BEGIN
+
 
 	-- Reset Delay
 	RD0 : Reset_Delay PORT MAP(MAX10_CLK1_50, DLY_RST);
@@ -115,16 +124,19 @@ BEGIN
 	-- Reset
 	reset <= KEY(0) AND DLY_RST;
 
+	-- Switch
+	SW0 : Switch PORT MAP(clk, reset, KEY(1), S0);
+
 	-- Clock Generater at 1s(25000000)
 	CG0 : ClkGen GENERIC MAP(25000000) PORT MAP(MAX10_CLK1_50, reset, clk1);
 	clk <= clk1;
 
 
 	LEDR(7 DOWNTO 0) <= PC;
-	LEDR(8) <= KEY(1);
+	LEDR(8) <= S0;
 
 	-- Signal of Up/Down Counter	
-	EN0 <= '0'; -- Enable=1(Up/Down)
+	EN0 <= S0; -- Enable=1(It stops when EN0='0')
 	EN1 <= CB0; -- 9
 	EN2 <= CB1 AND EN1; -- 99
 	EN3 <= CB2 AND EN2; -- 999

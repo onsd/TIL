@@ -451,6 +451,7 @@ set_global_assignment -name VHDL_FILE mp.vhd
 set_global_assignment -name VHDL_FILE alu.vhd
 set_global_assignment -name VHDL_FILE im.vhd
 set_global_assignment -name VHDL_FILE rf.vhd
+set_global_assignment -name VHDL_FILE switch.vhd
 set_global_assignment -name SOURCE_FILE v/spi_param.h
 set_global_assignment -name VERILOG_FILE v/spi_ee_config.v
 set_global_assignment -name VERILOG_FILE v/spi_controller.v
