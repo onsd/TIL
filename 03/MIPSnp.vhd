@@ -10,7 +10,7 @@ entity MIPSnp is
         PCOut : out std_logic_vector(7 downto 0);
         -- add ports
         EN : in std_logic;
-        RegN: out std_logic_vector(2 downto 0);
+        RegN: in std_logic_vector(2 downto 0);
         RegD: out std_logic_vector(15 downto 0)
     );
 end MIPSnp;
@@ -39,7 +39,10 @@ component RF is
         RSel : in std_logic_vector(1 downto 0);  -- rsSel, rtSel
         rC : in std_logic_vector(31 downto 0);
         RSet : in std_logic_vector(2 downto 0);  -- rdSet, rtSet, r31Set
-        rA, rB : out std_logic_vector(31 downto 0)
+        rA, rB : out std_logic_vector(31 downto 0);
+        RSelect: in std_logic_vector(2 downto 0);
+        ROut: out std_logic_vector(15 downto 0);
+        IM : in std_logic_vector(31 downto 0)
     );
 end component;
 
@@ -152,7 +155,7 @@ begin
     Rstd <= rsrtrd;
     RSel <= rsSel & rtSel;
     RSet <= rdSet & rtSet & r31Set;
-    RFi : RF port map (CLK, RESET, Rstd, Rsel, rC, RSet, rA, rB);  -- RF Instance
+    RFi : RF port map (CLK, RESET, Rstd, Rsel, rC, RSet, rA, rB, RegN, RegD, IMOut);  -- RF Instance
 
 -- EX : Execution
     AIn <= rA;  -- rA

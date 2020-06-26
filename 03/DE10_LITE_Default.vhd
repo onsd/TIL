@@ -91,7 +91,7 @@ ARCHITECTURE RTL OF DE10_LITE_Default IS
 			CLK, RESET : IN std_logic;
 			PCOut : OUT std_logic_vector(7 DOWNTO 0);
 			EN : in std_logic;
-			RegN: out std_logic_vector(2 downto 0);
+			RegN: in std_logic_vector(2 downto 0);
 			RegD: out std_logic_vector(15 downto 0)
 		);
 	END COMPONENT;
@@ -148,23 +148,24 @@ BEGIN
 	LEDR(9) <= CB0; -- LED Display Carry/Borrow
 
 	-- MIPS Non Pipeline	(Assignments>Settings>Files Add Components)
+	RegN <= SW(9 downto 7);
 	MIPSnp0 : MIPSnp PORT MAP(clk, reset, PC, EN0, RegN, RegD);
 
 	-- Up/Down Counter 0 to 999999
-	UDC0 : UpDownCounter PORT MAP(clk, reset, EN0, UD, SET, Cin, Cout0, CB0);
-	UDC1 : UpDownCounter PORT MAP(clk, reset, EN1, UD, SET, Cin, Cout1, CB1);
-	UDC2 : UpDownCounter PORT MAP(clk, reset, EN2, UD, SET, Cin, Cout2, CB2);
-	UDC3 : UpDownCounter PORT MAP(clk, reset, EN3, UD, SET, Cin, Cout3, CB3);
-	UDC4 : UpDownCounter PORT MAP(clk, reset, EN4, UD, SET, Cin, Cout4, CB4);
-	UDC5 : UpDownCounter PORT MAP(clk, reset, EN5, UD, SET, Cin, Cout5, CB5);
+	-- UDC0 : UpDownCounter PORT MAP(clk, reset, EN0, UD, SET, Cin, Cout0, CB0);
+	-- UDC1 : UpDownCounter PORT MAP(clk, reset, EN1, UD, SET, Cin, Cout1, CB1);
+	-- UDC2 : UpDownCounter PORT MAP(clk, reset, EN2, UD, SET, Cin, Cout2, CB2);
+	-- UDC3 : UpDownCounter PORT MAP(clk, reset, EN3, UD, SET, Cin, Cout3, CB3);
+	-- UDC4 : UpDownCounter PORT MAP(clk, reset, EN4, UD, SET, Cin, Cout4, CB4);
+	-- UDC5 : UpDownCounter PORT MAP(clk, reset, EN5, UD, SET, Cin, Cout5, CB5);
 
 	-- HEX Segment Display
-	HSD0 : SegmentDecoder PORT MAP(Cout0, HEX0);
-	HSD1 : SegmentDecoder PORT MAP(Cout1, HEX1);
-	HSD2 : SegmentDecoder PORT MAP(Cout2, HEX2);
-	HSD3 : SegmentDecoder PORT MAP(Cout3, HEX3);
-	HSD4 : SegmentDecoder PORT MAP(Cout4, HEX4);
-	HSD5 : SegmentDecoder PORT MAP(Cout5, HEX5);
+	HSD0 : SegmentDecoder PORT MAP(RegD(3 downto 0), HEX0);
+	HSD1 : SegmentDecoder PORT MAP(RegD(7 downto 4), HEX1);
+	HSD2 : SegmentDecoder PORT MAP(RegD(11 downto 8), HEX2);
+	HSD3 : SegmentDecoder PORT MAP(RegD(15 downto 12), HEX3);
+	HSD4 : SegmentDecoder PORT MAP("0000", HEX4);
+	HSD5 : SegmentDecoder PORT MAP("0000", HEX5);
 
 END RTL;
 

@@ -11,7 +11,11 @@ entity RF is
         RSel : in std_logic_vector(1 downto 0);  -- rsSel, rtSel
         rC : in std_logic_vector(31 downto 0);
         RSet : in std_logic_vector(2 downto 0);  -- rdSet, rtSet, r31Set
-        rA, rB : out std_logic_vector(31 downto 0)
+        rA, rB : out std_logic_vector(31 downto 0);
+        -- show value of register
+        RSelect: in std_logic_vector(2 downto 0); -- register select
+        ROut: out std_logic_vector(15 downto 0); -- register out
+        IM: in std_logic_vector(31 downto 0)
     );
 end RF;
 
@@ -102,4 +106,28 @@ begin
         end if;
     end process;
 
+    Ro: process(RSelect)
+    begin
+        case(RSelect) is
+            when "000" => -- IMOut
+                ROut <= IM(15 downto 0);
+            when "001" => -- R1
+                ROut <= r1(15 downto 0);
+            when "010" => -- R2
+                ROut <= r2(15 downto 0);
+            when "011" => -- R3
+                ROut <= r3(15 downto 0);
+            when "100" => -- R28
+                -- ROut <= r28(15 downto 0);
+                ROut <= r29(15 downto 0);
+            when "101" => -- R29
+                ROut <= r29(15 downto 0);
+            when "110" => -- R30
+                ROut <= r30(15 downto 0);
+            when "111" => -- R31
+                ROut <= r31(15 downto 0);
+            when others => ROut <= (others => '0');
+
+        end case;
+    end process;
 end RTL;
