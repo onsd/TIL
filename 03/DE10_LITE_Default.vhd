@@ -115,6 +115,8 @@ ARCHITECTURE RTL OF DE10_LITE_Default IS
 
 	SIGNAL RegN: std_logic_vector(2 downto 0);
 	SIGNAL RegD: std_logic_vector(15 downto 0);
+	SIGNAL TMP: std_logic_vector(15 downto 0);
+
 BEGIN
 
 
@@ -149,15 +151,18 @@ BEGIN
 
 	-- MIPS Non Pipeline	(Assignments>Settings>Files Add Components)
 	RegN <= SW(9 downto 7);
-	MIPSnp0 : MIPSnp PORT MAP(clk, reset, PC, EN0, RegN, RegD);
+	MIPSnp0 : MIPSnp PORT MAP(clk, reset, PC, EN0, RegN, TMP);
+	-- Up/Down Counter 0 to 9
+	UDC0 : UpDownCounter PORT MAP(clk, reset, EN0, UD, SET, Cin, Cout0, CB0);
 
-	-- Up/Down Counter 0 to 999999
-	-- UDC0 : UpDownCounter PORT MAP(clk, reset, EN0, UD, SET, Cin, Cout0, CB0);
 	-- UDC1 : UpDownCounter PORT MAP(clk, reset, EN1, UD, SET, Cin, Cout1, CB1);
 	-- UDC2 : UpDownCounter PORT MAP(clk, reset, EN2, UD, SET, Cin, Cout2, CB2);
 	-- UDC3 : UpDownCounter PORT MAP(clk, reset, EN3, UD, SET, Cin, Cout3, CB3);
 	-- UDC4 : UpDownCounter PORT MAP(clk, reset, EN4, UD, SET, Cin, Cout4, CB4);
 	-- UDC5 : UpDownCounter PORT MAP(clk, reset, EN5, UD, SET, Cin, Cout5, CB5);
+
+	-- select shown data
+	RegD <= ("000000000000" & Cout0) when (RegN = "000") else TMP;
 
 	-- HEX Segment Display
 	HSD0 : SegmentDecoder PORT MAP(RegD(3 downto 0), HEX0);

@@ -108,18 +108,14 @@ begin
     Ro: process(RegN)
     begin
         case(RegN) is
-            when "000" => -- IMOut
-            --     ROut <= IM(15 downto 0);
-                RegD <= (others => '0');
+            -- when "000" => -- Count
             when "001" => -- R1
                 RegD <= r1(15 downto 0);
             when "010" => -- R2
                 RegD <= r2(15 downto 0);
             when "011" => -- R3
                 RegD <= r3(15 downto 0);
-            when "100" => -- R28
-                -- ROut <= r28(15 downto 0);
-                RegD <= r29(15 downto 0);
+            -- when "100" => -- IMout
             when "101" => -- R29
                 RegD <= r29(15 downto 0);
             when "110" => -- R30
