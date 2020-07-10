@@ -136,7 +136,7 @@ BEGIN
 	clk <= clk1;
 
 
-	LEDR(7 DOWNTO 0) <= PC;
+	LEDR(5 DOWNTO 0) <= PC(7 downto 2);
 	LEDR(8) <= S0;
 
 	-- Signal of Up/Down Counter	
@@ -146,8 +146,9 @@ BEGIN
 	EN3 <= CB2 AND EN2; -- 999
 	EN4 <= CB3 AND EN3; -- 9999
 	EN5 <= CB4 AND EN4; -- 99999
-	UD <= SW(9); -- Up/Down=0/1
-	SET <= SW(8); -- Set Initial Value=1
+	
+	UD <= '0';
+	SET <= '0';
 	Cin <= SW(3 DOWNTO 0); -- Countet In
 	LEDR(9) <= CB0; -- LED Display Carry/Borrow
 
