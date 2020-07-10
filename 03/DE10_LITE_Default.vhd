@@ -146,7 +146,7 @@ BEGIN
 	EN3 <= CB2 AND EN2; -- 999
 	EN4 <= CB3 AND EN3; -- 9999
 	EN5 <= CB4 AND EN4; -- 99999
-	
+
 	UD <= '0';
 	SET <= '0';
 	Cin <= SW(3 DOWNTO 0); -- Countet In
@@ -173,8 +173,8 @@ BEGIN
 	HSD1 : SegmentDecoder PORT MAP(RegD(7 downto 4), HEX1);
 	HSD2 : SegmentDecoder PORT MAP(RegD(11 downto 8), HEX2);
 	HSD3 : SegmentDecoder PORT MAP(RegD(15 downto 12), HEX3);
-	HSD4 : SegmentDecoder PORT MAP("0000", HEX4);
-	HSD5 : SegmentDecoder PORT MAP("0000", HEX5);
+	HSD4 : SegmentDecoder PORT MAP(PC(3 downto 0), HEX4);
+	HSD5 : SegmentDecoder PORT MAP(PC(7 downto 4), HEX5);
 
 END RTL;
 
