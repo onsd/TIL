@@ -107,16 +107,18 @@ ARCHITECTURE RTL OF DE10_LITE_Default IS
 	SIGNAL DLY_RST : std_logic;
 	SIGNAL clk, clk1, reset : std_logic;
 	SIGNAL PC : std_logic_vector(7 DOWNTO 0);
-	SIGNAL EN0, EN1, EN2, EN3, EN4, EN5 : std_logic; -- Enable
+	SIGNAL EN0, EN1, EN2, EN3, EN4, EN5, ENABLE : std_logic; -- Enable
 	SIGNAL UD, SET : std_logic; -- Up/Down, Set
 	SIGNAL Cin : std_logic_vector(3 DOWNTO 0); -- Counter In
 	SIGNAL Cout0, Cout1, Cout2, Cout3, Cout4, Cout5 : std_logic_vector(3 DOWNTO 0); -- Counter Out
 	SIGNAL CB0, CB1, CB2, CB3, CB4, CB5, S0 : std_logic; -- Carry/Borrow
 
+	-- add signal
 	SIGNAL RegN: std_logic_vector(2 downto 0);
 	SIGNAL RegD: std_logic_vector(15 downto 0);
 	SIGNAL TMP: std_logic_vector(15 downto 0);
-
+	SIGNAL STOP_FLAG : std_logic;
+	SIGNAL STOP_ADDR : std_logic_vector(5 downto 0);
 BEGIN
 
 
@@ -149,21 +151,19 @@ BEGIN
 	Cin <= SW(3 DOWNTO 0); -- Countet In
 	LEDR(9) <= CB0; -- LED Display Carry/Borrow
 
+	STOP_FLAG <= SW(6);
+	STOP_ADDR <= SW(5 downto 0);
+
 	-- MIPS Non Pipeline	(Assignments>Settings>Files Add Components)
 	RegN <= SW(9 downto 7);
-	MIPSnp0 : MIPSnp PORT MAP(clk, reset, PC, EN0, RegN, TMP);
+	MIPSnp0 : MIPSnp PORT MAP(clk, reset, PC, EN0 AND ENABLE, RegN, TMP);
+	
 	-- Up/Down Counter 0 to 9
-	UDC0 : UpDownCounter PORT MAP(clk, reset, EN0, UD, SET, Cin, Cout0, CB0);
-
-	-- UDC1 : UpDownCounter PORT MAP(clk, reset, EN1, UD, SET, Cin, Cout1, CB1);
-	-- UDC2 : UpDownCounter PORT MAP(clk, reset, EN2, UD, SET, Cin, Cout2, CB2);
-	-- UDC3 : UpDownCounter PORT MAP(clk, reset, EN3, UD, SET, Cin, Cout3, CB3);
-	-- UDC4 : UpDownCounter PORT MAP(clk, reset, EN4, UD, SET, Cin, Cout4, CB4);
-	-- UDC5 : UpDownCounter PORT MAP(clk, reset, EN5, UD, SET, Cin, Cout5, CB5);
+	UDC0 : UpDownCounter PORT MAP(clk, reset, EN0 AND ENABLE, UD, SET, Cin, Cout0, CB0);
 
 	-- select shown data
 	RegD <= ("000000000000" & Cout0) when (RegN = "000") else TMP;
-
+	ENABLE <= '0' when STOP_FLAG = '1' else '1';
 	-- HEX Segment Display
 	HSD0 : SegmentDecoder PORT MAP(RegD(3 downto 0), HEX0);
 	HSD1 : SegmentDecoder PORT MAP(RegD(7 downto 4), HEX1);
