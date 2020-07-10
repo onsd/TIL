@@ -159,12 +159,15 @@ BEGIN
 	RegN <= SW(9 downto 7);
 	MIPSnp0 : MIPSnp PORT MAP(clk, reset, PC, EN0 AND ENABLE, RegN, TMP);
 	
-	-- Up/Down Counter 0 to 9
+	-- Up/Down Counter 00 to 99
 	UDC0 : UpDownCounter PORT MAP(clk, reset, EN0 AND ENABLE, UD, SET, Cin, Cout0, CB0);
+	UDC1 : UpDownCounter PORT MAP(clk, reset, EN1 AND ENABLE, UD, SET, Cin, Cout1, CB1);
+	UDC3 : UpDownCounter PORT MAP(clk, reset, EN3 AND ENABLE, UD, SET, Cin, Cout3, CB3);
+	UDC4 : UpDownCounter PORT MAP(clk, reset, EN4 AND ENABLE, UD, SET, Cin, Cout4, CB4);
 
 	-- select shown data
-	RegD <= ("000000000000" & Cout0) when (RegN = "000") else TMP;
-	ENABLE <= '0' when STOP_FLAG = '1' else '1';
+	RegD <= (Cout3 & Cout2 & Cout1 & Cout0) when (RegN = "000") else TMP;
+	ENABLE <= '0' when (STOP_FLAG = '1') AND (PC = (STOP_ADDR & "00")) else '1';
 	-- HEX Segment Display
 	HSD0 : SegmentDecoder PORT MAP(RegD(3 downto 0), HEX0);
 	HSD1 : SegmentDecoder PORT MAP(RegD(7 downto 4), HEX1);
