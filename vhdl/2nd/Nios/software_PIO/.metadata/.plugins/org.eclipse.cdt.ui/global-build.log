@@ -142,3 +142,15 @@ Info: Building ../DE10_LITE_Nios_bsp/
 C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
 [BSP build complete]
 [DE10_LITE_Nios build complete]
+13:49:16 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+[DE10_LITE_Nios build complete]
+13:50:25 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+[DE10_LITE_Nios build complete]
