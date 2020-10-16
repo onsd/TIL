@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="DE10_LITE_Qsys" kind="system" version="17.1" fabric="QSYS">
  <!-- Format version 17.1 590 (Future versions may contain additional information.) -->
- <!-- 2018.10.15.14:09:58 -->
+ <!-- 2020.10.13.14:24:58 -->
  <!-- A collection of modules and connections -->
  <parameter name="clockCrossingAdapter">
   <type>com.altera.sopcmodel.ensemble.EClockAdapter</type>
@@ -53,7 +53,7 @@
  </parameter>
  <parameter name="generationId">
   <type>int</type>
-  <value>1539580178</value>
+  <value>1602566652</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>true</visible>
@@ -101,7 +101,7 @@
  </parameter>
  <parameter name="projectName">
   <type>java.lang.String</type>
-  <value>DE10_LITE_SDRAM_Nios_Test.qpf</value>
+  <value>DE10_LITE_Nios.qpf</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -11562,7 +11562,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.CMacro.TIMESTAMP</name>
-   <value>1539580178</value>
+   <value>1602566652</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.compatible</name>
@@ -11582,7 +11582,7 @@ the requested settings for a module instance. -->
   </assignment>
   <assignment>
    <name>embeddedsw.dts.params.timestamp</name>
-   <value>1539580178</value>
+   <value>1602566652</value>
   </assignment>
   <assignment>
    <name>embeddedsw.dts.vendor</name>
@@ -11598,7 +11598,7 @@ the requested settings for a module instance. -->
   </parameter>
   <parameter name="timestamp">
    <type>int</type>
-   <value>1539580178</value>
+   <value>1602566652</value>
    <derived>true</derived>
    <enabled>false</enabled>
    <visible>false</visible>
@@ -20963,5 +20963,5 @@ parameters are a RESULT of the module parameters. -->
   <version>17.1</version>
  </plugin>
  <reportVersion>17.1 590</reportVersion>
- <uniqueIdentifier>705A0F49E6C00000016676213DB7</uniqueIdentifier>
+ <uniqueIdentifier>000C29B943A300000175206AA3D2</uniqueIdentifier>
 </EnsembleReport>
