@@ -9,7 +9,7 @@ class FizzBuzzTest < Minitest::Test
     def test_1を渡したら文字列1を返す
         assert_equal '1', @fizzbuzz.generate(1)
         assert_equal '2', @fizzbuzz.generate(2)
-        assert_equal '3', @fizzbuzz.generate(3)
+        assert_equal 'Fizz', @fizzbuzz.generate(3)
         assert_equal '4', @fizzbuzz.generate(4)
         assert_equal '5', @fizzbuzz.generate(5)
     end
@@ -17,7 +17,10 @@ end
 
 class FizzBuzz
     def self.generate(number)
-        number.to_s
+        if number % 3 == 0
+           return 'Fizz'
+        end
+        return number.to_s
     end
 end
 
