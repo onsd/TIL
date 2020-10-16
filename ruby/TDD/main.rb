@@ -3,16 +3,16 @@ Minitest::Reporters.use!
 require 'minitest/autorun'
 
 class FizzBuzzTest < Minitest::Test
-  def test_1を渡したら文字列1を返す
-    assert_equal '1', FizzBuzz.generate(1)
-    assert_equal '2', FizzBuzz.generate(2)
-    assert_equal '3', FizzBuzz.generate(3)
-    assert_equal '4', FizzBuzz.generate(4)
-    assert_equal '5', FizzBuzz.generate(5)
-
-
-
-  end
+    def setup
+        @fizzbuzz = FizzBuzz
+    end
+    def test_1を渡したら文字列1を返す
+        assert_equal '1', @fizzbuzz.generate(1)
+        assert_equal '2', @fizzbuzz.generate(2)
+        assert_equal '3', @fizzbuzz.generate(3)
+        assert_equal '4', @fizzbuzz.generate(4)
+        assert_equal '5', @fizzbuzz.generate(5)
+    end
 end
 
 class FizzBuzz
