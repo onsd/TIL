@@ -4480,3 +4480,84 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 
 !ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:43:01.045
 !MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:48:34.491
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:48:35.565
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x4041048]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:48:37.554
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:49:23.373
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:49:24.412
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x4041048]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:49:26.564
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:50:32.004
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:50:33.021
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x4041048]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 14:50:35.303
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:00:19.873
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:00:20.855
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x4041048]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:00:22.779
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:01:18.284
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:01:19.257
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x4041048]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:01:21.322
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:04:15.644
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:04:16.595
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x4041048]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:04:18.535
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:05:11.793
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:05:12.845
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x4041048]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:05:14.865
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:06:09.547
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:06:10.781
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x4041048]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:06:12.736
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:06:58.921
+!MESSAGE Terminated Launch with connection: 10USB-Blaster on localhost [USB-0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:07:00.045
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x4041048]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-10-20 15:07:01.977
+!MESSAGE Executing: [C:/intelfpga_lite/17.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x4041048 /cygdrive/z/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios/DE10_LITE_Nios.elf]
