@@ -1,0 +1,25 @@
+/*
+ * "KEY/SW/HEX/LEDR" example.
+ */
+
+#include <stdio.h>
+#include "terasic_includes.h"
+#include "system.h"
+#include "alt_types.h"
+
+int main()
+{
+  int count = 0;
+
+  printf("KEY/SW/HEX/LEDR Demo! KEY0 Start, KEY1 End.\n");
+  while (IORD(KEY_BASE, 0) & 0x1) {  // KEY0 Start
+	IOWR(HEX_BASE, 0, 0);  // HEX Clear
+	IOWR(LEDR_BASE, 0, 0); // LEDR Clear
+  }
+  do {
+	IOWR(HEX_BASE, 0, IORD(SW_BASE, 0));  // HEX<-SW
+	IOWR(LEDR_BASE, 0, count++);  // LEDR<-count
+	usleep(100*1000);  // 1us Sleep
+  } while (IORD(KEY_BASE, 0) & 0x2);  // KEY1 End
+  return 0;
+}

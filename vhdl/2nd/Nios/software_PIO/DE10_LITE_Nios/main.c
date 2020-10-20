@@ -7,6 +7,8 @@
 #include "system.h"
 #include "alt_types.h"
 
+int number[10] = {0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110, 0b01101101, 0b01111101, 0b00100111, 0b01111111, 0b01101111};
+
 int main()
 {
   int count = 0;
@@ -17,8 +19,9 @@ int main()
 	IOWR(LEDR_BASE, 0, 0); // LEDR Clear
   }
   do {
-	IOWR(HEX_BASE, 0, IORD(SW_BASE, 0));  // HEX<-SW
-	IOWR(LEDR_BASE, 0, count++);  // LEDR<-count
+	if (count>10) count=0;
+	IOWR(HEX_BASE, 0, number[count++]);  // HEX<-SW
+	IOWR(LEDR_BASE, 0, IORD(SW_BASE, 0));  // LEDR<-count
 	usleep(100*1000);  // 1us Sleep
   } while (IORD(KEY_BASE, 0) & 0x2);  // KEY1 End
   return 0;
