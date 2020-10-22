@@ -14,7 +14,7 @@
 		"ruby.useLanguageServer": true,
 		"solargraph.definitions": true,
 		"solargraph.diagnostics": true,
-		"solargraph.useBundler": true
+		"solargraph.commandPath": "/usr/local/bundle/bin/solargraph"
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
@@ -22,7 +22,6 @@
 		"rebornix.ruby",
 		"castwide.solargraph"
 	]
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
