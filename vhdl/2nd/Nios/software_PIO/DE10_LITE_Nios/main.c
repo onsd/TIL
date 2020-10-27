@@ -9,25 +9,53 @@
 
 int number[10] = {0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110, 0b01101101, 0b01111101, 0b00100111, 0b01111111, 0b01101111};
 
+int count = 0;
+bool down = 0;
+
 int main()
 {
-	int count = 0;
+
 
 	printf("KEY/SW/HEX/LEDR Demo! KEY0 Start, KEY1 End.\n");
 	while(1){
-		while (IORD(KEY_BASE, 0) & 0x1) {  // KEY0 Start
+		while (IORD(KEY_BASE, 0) & 0x01) {  // KEY0 Start
+			checkSW();
 			IOWR(HEX_BASE, 0, createNumber(count));  // HEX<-SW
 			IOWR(LEDR_BASE, 0, IORD(SW_BASE, 0));  // LEDR<-count
 		}
-		count = IORD(SW_BASE,0);
-		do {
-			IOWR(HEX_BASE, 0, createNumber(count++));  // HEX<-SW
+		printf("count start count: %d\n", count);
+		usleep(100*1000);
+
+		while (IORD(KEY_BASE, 0) & 0x01){  // KEY0 End
+			IOWR(HEX_BASE, 0, createNumber(down ? count-- : count++));  // HEX<-SW
 			IOWR(LEDR_BASE, 0, IORD(SW_BASE, 0));  // LEDR<-count
-			// usleep(100*1000);  // 1s Sleep
-			usleep(100*100);
-		} while (IORD(KEY_BASE, 0) & 0x2);  // KEY1 End
+			usleep(100*100); // wait for 1 sec
+		}
+
+		usleep(100*1000);
+		printf("count stop count: %d\n", count);
+
+
 	}
 	return 0;
+}
+
+
+void checkSW(){
+	if(!(IORD(KEY_BASE, 0) & 0x02)){
+		int sw_value = IORD(SW_BASE, 0);
+		if(sw_value == 0){
+			down = 0;
+			count = 0;
+		}else{
+			down = 1;
+			int tenth = (sw_value >> 4) & 0x0F;
+			int first = sw_value & 0x0F;
+			count = tenth*1000 + first*100;
+		}
+		printf("Count: %d\n", count);
+		usleep(100*1000);
+	}
 }
 
 int createNumber(int count) {
