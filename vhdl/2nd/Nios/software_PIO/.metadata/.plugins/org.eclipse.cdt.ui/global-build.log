@@ -1050,3 +1050,429 @@ Info:                      65528 KBytes free for stack + heap.
 Info: Creating DE10_LITE_Nios.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
 [DE10_LITE_Nios build complete]
+13:39:07 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+Compiling alt_software_exception.S...
+nios2-elf-gcc -MP -MMD -c   -O0 -g -Wall  -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global    -I./HAL/inc -I. -I./drivers/inc -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED  -Wa,-gdwarf2  -o obj/HAL/src/alt_software_exception.o HAL/src/alt_software_exception.S
+Creating libhal_bsp.a...
+rm -f -f libhal_bsp.a
+nios2-elf-ar -src libhal_bsp.a obj/HAL/src/alt_alarm_start.o obj/HAL/src/alt_busy_sleep.o obj/HAL/src/alt_close.o obj/HAL/src/alt_dcache_flush.o obj/HAL/src/alt_dcache_flush_all.o obj/HAL/src/alt_dcache_flush_no_writeback.o obj/HAL/src/alt_dev.o obj/HAL/src/alt_dev_llist_insert.o obj/HAL/src/alt_dma_rxchan_open.o obj/HAL/src/alt_dma_txchan_open.o obj/HAL/src/alt_do_ctors.o obj/HAL/src/alt_do_dtors.o obj/HAL/src/alt_ecc_fatal_entry.o obj/HAL/src/alt_ecc_fatal_exception.o obj/HAL/src/alt_env_lock.o obj/HAL/src/alt_environ.o obj/HAL/src/alt_errno.o obj/HAL/src/alt_exception_entry.o obj/HAL/src/alt_exception_muldiv.o obj/HAL/src/alt_exception_trap.o obj/HAL/src/alt_execve.o obj/HAL/src/alt_exit.o obj/HAL/src/alt_fcntl.o obj/HAL/src/alt_fd_lock.o obj/HAL/src/alt_fd_unlock.o obj/HAL/src/alt_find_dev.o obj/HAL/src/alt_find_file.o obj/HAL/src/alt_flash_dev.o obj/HAL/src/alt_fork.o obj/HAL/src/alt_fs_reg.o obj/HAL/src/alt_fstat.o obj/HAL/src/alt_get_fd.o obj/HAL/src/alt_getchar.o obj/HAL/src/alt_getpid.o obj/HAL/src/alt_gettod.o obj/HAL/src/alt_gmon.o obj/HAL/src/alt_icache_flush.o obj/HAL/src/alt_icache_flush_all.o obj/HAL/src/alt_iic.o obj/HAL/src/alt_iic_isr_register.o obj/HAL/src/alt_instruction_exception_entry.o obj/HAL/src/alt_instruction_exception_register.o obj/HAL/src/alt_io_redirect.o obj/HAL/src/alt_ioctl.o obj/HAL/src/alt_irq_entry.o obj/HAL/src/alt_irq_handler.o obj/HAL/src/alt_irq_register.o obj/HAL/src/alt_irq_vars.o obj/HAL/src/alt_isatty.o obj/HAL/src/alt_kill.o obj/HAL/src/alt_link.o obj/HAL/src/alt_load.o obj/HAL/src/alt_log_macro.o obj/HAL/src/alt_log_printf.o obj/HAL/src/alt_lseek.o obj/HAL/src/alt_main.o obj/HAL/src/alt_malloc_lock.o obj/HAL/src/alt_mcount.o obj/HAL/src/alt_open.o obj/HAL/src/alt_printf.o obj/HAL/src/alt_putchar.o obj/HAL/src/alt_putcharbuf.o obj/HAL/src/alt_putstr.o obj/HAL/src/alt_read.o obj/HAL/src/alt_release_fd.o obj/HAL/src/alt_remap_cached.o obj/HAL/src/alt_remap_uncached.o obj/HAL/src/alt_rename.o obj/HAL/src/alt_sbrk.o obj/HAL/src/alt_settod.o obj/HAL/src/alt_software_exception.o obj/HAL/src/alt_stat.o obj/HAL/src/alt_tick.o obj/HAL/src/alt_times.o obj/HAL/src/alt_uncached_free.o obj/HAL/src/alt_uncached_malloc.o obj/HAL/src/alt_unlink.o obj/HAL/src/alt_usleep.o obj/HAL/src/alt_wait.o obj/HAL/src/alt_write.o obj/HAL/src/altera_nios2_gen2_irq.o obj/HAL/src/crt0.o obj/alt_sys_init.o obj/drivers/src/altera_avalon_jtag_uart_fd.o obj/drivers/src/altera_avalon_jtag_uart_init.o obj/drivers/src/altera_avalon_jtag_uart_ioctl.o obj/drivers/src/altera_avalon_jtag_uart_read.o obj/drivers/src/altera_avalon_jtag_uart_write.o obj/drivers/src/altera_avalon_sysid_qsys.o obj/drivers/src/altera_avalon_timer_sc.o obj/drivers/src/altera_avalon_timer_ts.o obj/drivers/src/altera_avalon_timer_vars.o
+[BSP build complete]
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:42:04 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+[DE10_LITE_Nios build complete]
+13:43:34 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:22:20: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+  IOWR(HEX_BASE, 0, createNumber(count++));  // HEX<-SW
+                    ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c: In function 'createNumber':
+main.c:42:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:44:18 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:22:20: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+  IOWR(HEX_BASE, 0, createNumber(count++));  // HEX<-SW
+                    ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c: In function 'createNumber':
+main.c:42:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:46:56 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'createNumber':
+main.c:45:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:47:49 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'main':
+main.c:14:7: warning: unused variable 'count' [-Wunused-variable]
+   int count = 0;
+       ^
+main.c: In function 'createNumber':
+main.c:45:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:49:35 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'main':
+main.c:14:7: warning: unused variable 'count' [-Wunused-variable]
+   int count = 0;
+       ^
+main.c: In function 'createNumber':
+main.c:45:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:50:33 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+main.c: In function 'main':
+main.c:14:7: warning: unused variable 'count' [-Wunused-variable]
+   int count = 0;
+       ^
+main.c: In function 'createNumber':
+main.c:45:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:51:55 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:30:21: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+   IOWR(HEX_BASE, 0, createNumber(10));
+                     ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c:14:7: warning: unused variable 'count' [-Wunused-variable]
+   int count = 0;
+       ^
+main.c: In function 'createNumber':
+main.c:46:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:53:26 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:31:24: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+      IOWR(HEX_BASE, 0, createNumber(10));
+                        ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c:14:7: warning: unused variable 'count' [-Wunused-variable]
+   int count = 0;
+       ^
+main.c: In function 'createNumber':
+main.c:48:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:54:36 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:23:23: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+     IOWR(HEX_BASE, 0, createNumber(count++));  // HEX<-SW
+                       ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c: In function 'createNumber':
+main.c:45:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:56:31 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:23:23: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+     IOWR(HEX_BASE, 0, createNumber(count++));  // HEX<-SW
+                       ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c: In function 'createNumber':
+main.c:44:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:57:16 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:23:22: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+    IOWR(HEX_BASE, 0, createNumber(count++));  // HEX<-SW
+                      ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c: In function 'createNumber':
+main.c:44:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+13:58:32 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:23:22: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+    IOWR(HEX_BASE, 0, createNumber(count++));  // HEX<-SW
+                      ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c: In function 'createNumber':
+main.c:47:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 30 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+14:00:39 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:19:22: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+    IOWR(HEX_BASE, 0, createNumber(count));  // HEX<-SW
+                      ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c: In function 'createNumber':
+main.c:46:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 30 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+14:01:47 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:19:22: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+    IOWR(HEX_BASE, 0, createNumber(count));  // HEX<-SW
+                      ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c: In function 'createNumber':
+main.c:44:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]
+14:02:56 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+make all 
+Info: Building ../DE10_LITE_Nios_bsp/
+C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Nios_bsp/ -I../DE10_LITE_Nios_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from terasic_includes.h:43:0,
+                 from main.c:6:
+main.c: In function 'main':
+main.c:19:22: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+    IOWR(HEX_BASE, 0, createNumber(count));  // HEX<-SW
+                      ^
+../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
+   __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
+                                                                  ^
+main.c: In function 'createNumber':
+main.c:45:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+  return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
+                                                                                   ^
+Info: Linking DE10_LITE_Nios.elf
+nios2-elf-g++  -T'../DE10_LITE_Nios_bsp//linker.x' -msys-crt0='../DE10_LITE_Nios_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../DE10_LITE_Nios_bsp/   -Wl,-Map=DE10_LITE_Nios.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o DE10_LITE_Nios.elf obj/default/main.o -lm -msys-lib=m
+nios2-elf-insert DE10_LITE_Nios.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x4041048 --timestamp 1603170736 --stderr_dev jtag_uart --stdin_dev jtag_uart --stdout_dev jtag_uart --sopc_system_name DE10_LITE_Qsys --quartus_project_dir "Z:/vhdl/2nd/Nios" --jdi ../..//output_files/DE10_LITE_Nios.jdi --sopcinfo Z:/vhdl/2nd/Nios/software_PIO/DE10_LITE_Nios_bsp/../../DE10_LITE_Qsys.sopcinfo
+Info: (DE10_LITE_Nios.elf) 29 KBytes program size (code + initialized data).
+Info:                      65528 KBytes free for stack + heap.
+Info: Creating DE10_LITE_Nios.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
+[DE10_LITE_Nios build complete]

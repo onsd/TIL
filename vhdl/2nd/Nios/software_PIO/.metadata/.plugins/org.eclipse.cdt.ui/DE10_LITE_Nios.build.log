@@ -1,4 +1,4 @@
-15:06:36 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
+14:02:56 **** Incremental Build of configuration Nios II for project DE10_LITE_Nios ****
 make all 
 Info: Building ../DE10_LITE_Nios_bsp/
 C:/intelFPGA_lite/17.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../DE10_LITE_Nios_bsp/
@@ -8,14 +8,14 @@ nios2-elf-gcc -xc -MP -MMD -c -I../DE10_LITE_Nios_bsp//HAL/inc -I../DE10_LITE_Ni
 In file included from terasic_includes.h:43:0,
                  from main.c:6:
 main.c: In function 'main':
-main.c:22:20: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
-  IOWR(HEX_BASE, 0, createNumber(count++));  // HEX<-SW
-                    ^
+main.c:19:22: warning: implicit declaration of function 'createNumber' [-Wimplicit-function-declaration]
+    IOWR(HEX_BASE, 0, createNumber(count));  // HEX<-SW
+                      ^
 ../DE10_LITE_Nios_bsp//HAL/inc/io.h:75:66: note: in definition of macro 'IOWR'
    __builtin_stwio (__IO_CALC_ADDRESS_NATIVE ((BASE), (REGNUM)), (DATA))
                                                                   ^
 main.c: In function 'createNumber':
-main.c:42:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
+main.c:45:83: warning: suggest parentheses around arithmetic in operand of '|' [-Wparentheses]
   return number[four]*256*256*256 + number[three] * 256 * 256  + number[two] * 256 + number[one] | 0b100000000000000000000000;
                                                                                    ^
 Info: Linking DE10_LITE_Nios.elf
@@ -27,5 +27,5 @@ Info: Creating DE10_LITE_Nios.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source DE10_LITE_Nios.elf >DE10_LITE_Nios.objdump
 [DE10_LITE_Nios build complete]
 
-15:06:58 Build Finished (took 21s.732ms)
+14:03:18 Build Finished (took 22s.107ms)
 
