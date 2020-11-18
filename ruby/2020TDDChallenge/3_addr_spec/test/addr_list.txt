@@ -1,0 +1,9 @@
+example@example.com
+"example@example"@example.com
+"\""@example.com
+"""@example.com
+"\"@example.com
+
+...@example.com
+
+
