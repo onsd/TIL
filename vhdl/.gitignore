@@ -63,3 +63,34 @@ simulation/
 timing/
 testbench/
 *_sim/
+.metadata
+
+#Quartus intermediate files
+db/
+incremental_db/
+output_files/
+simulation/
+c5_pin_model_dump.txt
+*.qws
+# Platform Designer Intermadiate files
+*.sopcinfo
+.qsys_edit/
+nios2_PIOLED_qsys/
+# Nios Software Builder tools intermedate files
+software/*/.settings/
+software/*/obj/
+software/*/HAL/
+software/*/drivers/
+software/*/*.a
+software/*/summary.html
+software/*/Makefile
+software/*/mem_init.mk
+software/*/public.mk
+software/*/system.h
+software/*/.settings/
+software/*/obj/
+software/*/*.map
+software/*/*.elf
+software/*/*.objdump
+.metadata/
+RemoteSystemsTempFiles/
