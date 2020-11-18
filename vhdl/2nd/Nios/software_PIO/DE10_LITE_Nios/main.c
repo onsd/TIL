@@ -29,7 +29,7 @@ int main()
 		while (IORD(KEY_BASE, 0) & 0x01){  // KEY0 End
 			IOWR(HEX_BASE, 0, createNumber(down ? count-- : count++));  // HEX<-SW
 			IOWR(LEDR_BASE, 0, IORD(SW_BASE, 0));  // LEDR<-count
-			usleep(100*100); // wait for 1 sec
+			usleep(100*100); // wait for 0.01 sec
 		}
 
 		usleep(100*1000);
