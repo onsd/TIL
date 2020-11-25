@@ -14,8 +14,6 @@ bool down = 0;
 
 int main()
 {
-
-
 	printf("KEY/SW/HEX/LEDR Demo! KEY0 Start, KEY1 End.\n");
 	while(1){
 		while (IORD(KEY_BASE, 0) & 0x01) {  // KEY0 Start
@@ -34,8 +32,6 @@ int main()
 
 		usleep(100*1000);
 		printf("count stop count: %d\n", count);
-
-
 	}
 	return 0;
 }
