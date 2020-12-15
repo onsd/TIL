@@ -84,26 +84,32 @@ component DE10_LITE_Qsys is
 	);
 end component DE10_LITE_Qsys;
 
-COMPONENT ClkGen IS
-	GENERIC (N : INTEGER);
-	PORT (
-		CLK, RESET : IN std_logic;
-		CLKout : OUT std_logic
-	);
-END COMPONENT;
-
 signal pll_a, pll_l, reset : std_logic;
 signal hex : std_logic_vector(31 downto 0);
 --signal key4 : std_logic_vector(3 downto 0);
 signal dram_dqm : std_logic_vector(1 downto 0);
 
 -- add signal for HW Timer
-signal clk, clk1: std_logic;
+signal clk: std_logic;
 begin
-	-- Clock Generater 
+	-- Clock Generater 0.01 Second (10 ms)
+	PROCESS (MAX10_CLK2_50, reset)
+		VARIABLE i : INTEGER;
+	BEGIN
+		IF (reset = '0') THEN
+			i := 0;
+			clk <= '0';
+		ELSIF (MAX10_CLK2_50'event AND MAX10_CLK2_50 = '1') THEN
+			-- if (i < 25000000) then
+			IF (i < 250000) THEN
+				i := i + 1;
+			ELSE
+				i := 0;
+				clk <= NOT clk;
+			END IF;
+		END IF;
+	END PROCESS;
 	reset <= not SW(9);
-	CG0 : ClkGen GENERIC MAP(25000000) PORT MAP(MAX10_CLK1_50, reset, clk1);
-	clk <= clk1;
 
 	Nios: DE10_LITE_Qsys port map (
 		pll_a, pll_l,MAX10_CLK2_50, DRAM_CLK,
@@ -124,36 +130,3 @@ begin
 	DRAM_LDQM <= dram_dqm(0);
 
 end RTL;
-
--- Clock Generater
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;
-ENTITY ClkGen IS
-	GENERIC (N : INTEGER := 25000000); -- 1s
-	PORT (
-		CLK, RESET : IN std_logic;
-		CLKout : OUT std_logic
-	);
-END ClkGen;
-
-ARCHITECTURE RTL OF ClkGen IS
-	SIGNAL c : std_logic;
-BEGIN
-	PROCESS (CLK, RESET)
-		VARIABLE i : INTEGER;
-	BEGIN
-		IF (RESET = '0') THEN
-			i := 0;
-			c <= '0';
-		ELSIF (CLK'event AND CLK = '1') THEN
-			IF (i < N) THEN
-				i := i + 1;
-			ELSE
-				i := 0;
-				c <= NOT c;
-			END IF;
-		END IF;
-	END PROCESS;
-	CLKout <= c;
-END RTL;
