@@ -20,7 +20,12 @@ def main():
     cnt = 0
     while True:
         image_path = image.save_image()
-        cnt = recognize_digits.recognize_digits(image_path)
+        try {
+            cnt = recognize_digits.recognize_digits(image_path)
+        } except Exception as e {
+            print('Recognize_digits error', e)
+            cnt = '-1'
+        }
         print('{} current value: {}'.format(
             int(time.mktime(time.gmtime())), cnt))
         if not cnt == before_cnt:

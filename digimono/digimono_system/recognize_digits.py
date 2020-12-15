@@ -24,16 +24,22 @@ DIGITS_LOOKUP = {
 
     # 人力
     (1, 0, 1, 1, 1, 0, 1): 2,
-    (1, 0, 1, 0, 1, 0, 1): 0,
     (0, 1, 1, 1, 0, 0, 0): 4,
     (1, 1, 1, 1, 0, 1, 0): 4,
     (1, 1, 1, 1, 0, 0, 0): 4,
     (0, 0, 1, 0, 1, 0, 1): 2,
     (0, 1, 0, 1, 0, 1, 1): 5,
     (1, 0, 0, 1, 0, 1, 1): 5,
-    (1, 0, 1, 0, 1, 1, 1): 0,
     (0, 0, 1, 1, 1, 1, 1): 2,
-    (0, 1, 0, 1, 0, 0, 0): 4
+    (0, 1, 0, 1, 0, 0, 0): 4,
+    (1, 1, 0, 0, 1, 1, 1): 1,
+    (1, 1, 1, 0, 0, 1, 1): 1,
+    (1, 1, 1, 0, 1, 0, 1): 1,
+    (1, 0, 1, 0, 1, 1, 1): 1,
+    (1, 0, 1, 0, 0, 1, 1): 1,
+    (1, 1, 0, 1, 1, 0, 1): 1,
+    (1, 1, 0, 1, 1, 0, 1): 1,
+    (0, 1, 0, 1, 1, 0, 0): 1
 }
 
 
@@ -60,8 +66,9 @@ def recognize_digits(image_path):
 
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-    edged = cv2.Canny(blurred, 50, 200, 255)
-
+    cv2.imwrite('./out/000_bulurred.png', blurred)
+    edged = cv2.Canny(blurred, 25, 200, 255)
+    cv2.imwrite('./out/00_output_edged.png', edged)
     # find contours in the edge map, then sort them by their
     # size in descending order
     cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,
@@ -88,16 +95,20 @@ def recognize_digits(image_path):
     height = output.shape[0]
     width = output.shape[1]
     print('height: {}, width: {}'.format(height, width))
-    # output_resized = output[33:height-f55, 90:width-35]
-    output_resized = output[32:height-50, 90:width-30]
+    output_resized = output[33:height-55, 20:width]
+    # output_resized = output[25:height-40, 90:width-30]
+    try:
+        cv2.imwrite('./out/01_output_resized.png', output_resized)
+    except Exception as e:
+        print('imwrite error')
+        output_resized = edged
 
-    cv2.imwrite('./out/01_output_resized.png', output_resized)
     gray = cv2.cvtColor(output_resized, cv2.COLOR_BGR2GRAY)
     cv2.imwrite('./out/02_gray.png', gray)
 
     # 2値化（100:２値化の閾値／画像を見て調整する）
     # ret, thresh1 = cv2.threshold(gray, 103, 255, cv2.THRESH_BINARY)
-    ret, thresh1 = cv2.threshold(gray, 50, 255, cv2.THRESH_BINARY)
+    ret, thresh1 = cv2.threshold(gray, 75, 255, cv2.THRESH_BINARY)
     cv2.imwrite("./out/03_thresh.png", thresh1)
 
     # ノイズ処理（モルフォロジー変換）
@@ -112,27 +123,55 @@ def recognize_digits(image_path):
     # find contours in the thresholded image, then initialize the
     # digit contours lists
     cnts = cv2.findContours(img_bitwise.copy(), cv2.RETR_EXTERNAL,
+    # cnts = cv2.findContours(img_opening.copy(), cv2.RETR_EXTERNAL,
                             cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
 
     digitCnts = []
+    max_width = 0
+    original_img = img_bitwise.copy()
+    original_img_all = img_bitwise.copy()
+
     for i, cnt in enumerate(cnts):
         img = img_bitwise.copy()
+        # img = img_opening.copy()
         x, y, w, h = cv2.boundingRect(cnt)
-        cv2.rectangle(img, (x, y), (x + w, y + h),
-                      (255, 0, 0), cv2.LINE_4)
+        start_point = (x, y)
+        end_point = (x + w, y + h)
+        color = (255,255,0)
+        cv2.rectangle(img, start_point, end_point, color, cv2.LINE_4)
+        cv2.rectangle(original_img_all, start_point, end_point, color, cv2.LINE_4)
 
-        if 10 < w and 20 < h:
-            # print('w: {}, h:{}'.format(w, h))
-            cv2.imwrite('./out/result-{}.png'.format(i), img)
+        print('i:{}, x: {}, y:{}, w: {}, h:{}'.format(i, x, y, w, h))
+        cv2.imwrite('./out/result-{}.png'.format(i), img)
+
+        if 5 < w and 30 < h:
             digitCnts.append(cnt)
+            cv2.rectangle(original_img, start_point, end_point, color, cv2.LINE_4)
+
+        if max_width < w:
+            print('max_width is {}'.format(w))
+            max_width = w
+    cv2.imwrite('./out/result-collect-all.png', original_img)
+    cv2.imwrite('./out/result-all.png', original_img_all)
 
     digitCnts = contours.sort_contours(digitCnts, method="left-to-right")[0]
+
     digits = []
 
     for index, c in enumerate(digitCnts):
         # extract the digit ROI
         (x, y, w, h) = cv2.boundingRect(c)
+        
+        if w*2 < max_width:
+            x = x - max_width + 10
+            if 0 > x:
+                x = 3
+                w = max_width - x
+
+        w = max_width
+
+        print('x: {}, y: {}, h: {}, w: {}'.format(x, y, h, w))
         roi = img_bitwise[y:y + h, x:x + w]
         # print('img: {}, roi:{}'.format(img_bitwise.shape, roi.shape))
 
@@ -171,6 +210,7 @@ def recognize_digits(image_path):
             # thresholded pixels in the segment, and then compute
             # the area of the segment
             segROI = roi[yA: yB, xA: xB]
+            # print('yA: {}, yB: {}, xA: {}, xB: {}'.format(yA, yB, xA, xB))
             cv2.imwrite('./out/demo-{}-{}.jpg'.format(x, i), segROI)
 
             total = cv2.countNonZero(segROI)
@@ -186,6 +226,8 @@ def recognize_digits(image_path):
         # print(tuple(on))
         digit = DIGITS_LOOKUP.get(tuple(on), '?')
         print('predict: {}'.format(digit))
+        if digit == '?':
+            print('recognized: {}'.format(on))
         digits.append(digit)
 
         # draw rectangle to show estimated numbers
