@@ -84,13 +84,32 @@ component DE10_LITE_Qsys is
 	);
 end component DE10_LITE_Qsys;
 
+COMPONENT UDCounter IS
+PORT (
+	clk : IN std_logic;
+	reset : IN std_logic;
+	EN : IN std_logic;
+	UD : IN std_logic;
+	SET : IN std_logic;
+	Cin : IN std_logic_vector(3 DOWNTO 0);
+	Cout : OUT std_logic_vector(3 DOWNTO 0);
+	CB : OUT std_logic;
+	STOP : IN std_logic
+);
+END COMPONENT;
+
 signal pll_a, pll_l, reset : std_logic;
 signal hex : std_logic_vector(31 downto 0);
 --signal key4 : std_logic_vector(3 downto 0);
 signal dram_dqm : std_logic_vector(1 downto 0);
 
 -- add signal for HW Timer
-signal clk: std_logic;
+signal clk, isStop, isSet, SET, START: std_logic;
+signal ZERO, Cout0, Cout1, Cout2, Cout3, Cout4, Cout5: std_logic_vector(3 downto 0);
+signal CB0, CB1, CB2, CB3, CB4, CB5: std_logic;
+signal EN0, EN1, EN2, EN3, EN4, EN5: std_logic;
+signal Dout0, Dout1, Dout2, Dout3, Dout4, Dout5: std_logic_vector(7 downto 0);
+-- signal end
 begin
 	-- Clock Generater 0.01 Second (10 ms)
 	PROCESS (MAX10_CLK2_50, reset)
@@ -111,8 +130,34 @@ begin
 	END PROCESS;
 	reset <= not SW(9);
 
+
+	-- hex(15 downto 0) -> counter value
+	-- hex(16) -> START
+	
+	-- hex(0) == 0 or 1
+	-- TODO:
+	-- 	1. set UDCounter 
+	-- 	2. set SegmentDecoder
+	-- 	3. IO_WRITE: 0 : start/stop
+	--  			 1 : set	
+	--               2 :clear 
+	--				 31 downto 16 : counter value
+	START <= '1';
+	ZERO <= "0000";
+	C0 : UDCounter PORT MAP(clk, reset, START, isSET, SET, ZERO, Cout0, CB0, isStop);
+	EN1 <= CB0 AND START;
+	C1 : UDCounter PORT MAP(clk, reset, EN1, isSET, SET, ZERO, Cout1, CB1, isStop);
+	EN2 <= CB1 AND CB0 AND START;
+	C2 : UDCounter PORT MAP(clk, reset, EN2, isSET, SET, ZERO, Cout2, CB2, isStop);
+	EN3 <= CB2 AND CB1 AND CB0 AND START;
+	C3 : UDCounter PORT MAP(clk, reset, EN3, isSET, SET, ZERO, Cout3, CB3, isStop);
+	EN4 <= CB3 AND CB2 AND CB1 AND CB0 AND START;
+	C4 : UDCounter PORT MAP(clk, reset, EN4, isSET, SET, ZERO, Cout4, CB4, isStop);
+	EN5 <= CB4 AND CB3 AND CB2 AND CB1 AND CB0 AND START;
+	C5 : UDCounter PORT MAP(clk, reset, EN5, isSET, SET, ZERO, Cout5, CB5, isStop);
+
 	Nios: DE10_LITE_Qsys port map (
-		pll_a, pll_l,MAX10_CLK2_50, DRAM_CLK,
+		pll_a, pll_l, MAX10_CLK2_50, DRAM_CLK,
 		hex, KEY, LEDR, reset,  
 		DRAM_ADDR, DRAM_BA, DRAM_CAS_N, DRAM_CKE,
 		DRAM_CS_N, DRAM_DQ, dram_dqm, DRAM_RAS_N, DRAM_WE_N,
