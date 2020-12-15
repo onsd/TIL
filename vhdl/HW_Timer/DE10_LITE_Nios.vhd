@@ -60,6 +60,7 @@ entity DE10_LITE_Nios is
 end DE10_LITE_Nios;
  
 architecture RTL of DE10_LITE_Nios is
+
 component DE10_LITE_Qsys is
 	port (
 		altpll_0_areset_conduit_export    : in    std_logic                     := 'X';             -- export
@@ -82,64 +83,14 @@ component DE10_LITE_Qsys is
 		sw_external_connection_export     : in    std_logic_vector(31 downto 0) := (others => 'X')  -- export
 	);
 end component DE10_LITE_Qsys;
-COMPONENT UDCounter IS
-	 PORT (
-			clk : IN std_logic;
-			reset : IN std_logic;
-			EN : IN std_logic;
-			UD : IN std_logic;
-			SET : IN std_logic;
-			Cin : IN std_logic_vector(3 DOWNTO 0);
-			Cout : OUT std_logic_vector(3 DOWNTO 0);
-			CB : OUT std_logic;
-			STOP : IN std_logic
-	 );
-END COMPONENT;
-COMPONENT ClkGen IS
-	GENERIC (N : INTEGER);
-	PORT (
-		CLK, RESET : IN std_logic;
-		CLKout : OUT std_logic
-	);
-END COMPONENT;
 
-SIGNAL START, SET, isSet, UD, CB, isStop : std_logic; -- Enable, Set, Up/Down, Carry/Borrow
-signal pll_a, pll_l, reset,clk, clk1 : std_logic;
-SIGNAL Cout0, Cout1, Cout2, Cout3, Cout4, Cout5 : std_logic_vector(3 DOWNTO 0); -- Counter Out
+signal pll_a, pll_l, reset : std_logic;
 signal hex : std_logic_vector(31 downto 0);
-signal ZERO : std_logic_vector(3 DOWNTO 0); --
 --signal key4 : std_logic_vector(3 downto 0);
 signal dram_dqm : std_logic_vector(1 downto 0);
-signal INPUT: std_logic_vector(31 downto 0);
-
-SIGNAL CB0 : std_logic;
-SIGNAL CB1 : std_logic;
-SIGNAL CB2 : std_logic;
-SIGNAL CB3 : std_logic;
-SIGNAL CB4 : std_logic;
-SIGNAL CB5 : std_logic;
-SIGNAL EN0, EN1, EN2, EN3, EN4, EN5, ENABLE : std_logic; -- Enable
 
 begin
-	-- Clock Generater at 1s(25000000)
-	CG0 : ClkGen GENERIC MAP(25000000) PORT MAP(MAX10_CLK1_50, reset, clk1);
-	clk <= clk1;
 	reset <= not SW(9);
-
-	LEDR(8) <= isSET;
-	LEDR(9) <= START; -- LED Display Carry/Borrow
-	
-	ZERO <= "0000";
-	C0 : UDCounter PORT MAP(clk, reset, START, isSET, SET, ZERO, Cout0, CB0, isStop);
-
-	EN1 <= CB0 AND START;
-	C1 : UDCounter PORT MAP(clk, reset, EN1, isSET, SET, ZERO, Cout1, CB1, isStop);
-
-	EN2 <= CB1 AND CB0 AND START;
-	C2 : UDCounter PORT MAP(clk, reset, EN2, isSET, SET, ZERO, Cout2, CB2, isStop);
-
-	EN3 <= CB2 AND CB1 AND CB0 AND START;
-	C3 : UDCounter PORT MAP(clk, reset, EN3, isSET, SET, ZERO, Cout3, CB3, isStop);
 
 	Nios: DE10_LITE_Qsys port map (
 		pll_a, pll_l,MAX10_CLK2_50, DRAM_CLK,
@@ -149,22 +100,10 @@ begin
 		SW
 	); 
 
-	-- hex(15 downto 0) -> counter value
-	-- hex(16) -> START
-	
-	-- hex(0) == 0 or 1
-	-- TODO:
-	-- 	1. set UDCounter 
-	-- 	2. set SegmentDecoder
-	-- 	3. IO_WRITE: 0 : start/stop
-	--  					 1 : set	
-	--                 2 :clear 
-	--						 31 downto 16 : counter value
-	
-	HEX0 <= "0000" & hex(3 downto 0);
-	HEX1 <= "0000" & hex(7 downto 4);
-	HEX2 <= "0000" & hex(11 downto 8);
-	HEX3 <= "0000" & hex(15 downto 12);
+	HEX0 <= hex(7 downto 0);
+	HEX1 <= hex(15 downto 8);
+	HEX2 <= hex(23 downto 16);
+	HEX3 <= hex(31 downto 24);
 	HEX4 <= (others => '0');
 	HEX5 <= (others => '0');
 --	key4 <= "00" & KEY;  -- Compatible to the Other Board
@@ -172,37 +111,3 @@ begin
 	DRAM_LDQM <= dram_dqm(0);
 
 end RTL;
-
-
--- Clock Generater
-library IEEE;
-use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;
-ENTITY ClkGen IS
-	GENERIC (N : INTEGER := 25000000); -- 1s
-	PORT (
-		CLK, RESET : IN std_logic;
-		CLKout : OUT std_logic
-	);
-END ClkGen;
-
-ARCHITECTURE RTL OF ClkGen IS
-	SIGNAL c : std_logic;
-BEGIN
-	PROCESS (CLK, RESET)
-		VARIABLE i : INTEGER;
-	BEGIN
-		IF (RESET = '0') THEN
-			i := 0;
-			c <= '0';
-		ELSIF (CLK'event AND CLK = '1') THEN
-			IF (i < N) THEN
-				i := i + 1;
-			ELSE
-				i := 0;
-				c <= NOT c;
-			END IF;
-		END IF;
-	END PROCESS;
-	CLKout <= c;
-END RTL;

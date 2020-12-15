@@ -481,9 +481,6 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to DRAM_LDQM
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to DRAM_RAS_N
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to DRAM_UDQM
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to DRAM_WE_N
-set_global_assignment -name VHDL_FILE SegmentDecoder.vhd
-set_global_assignment -name VHDL_FILE UDcounter.vhd
 set_global_assignment -name SDC_FILE DE10_LITE_Nios.sdc
 set_global_assignment -name QSYS_FILE DE10_LITE_Qsys.qsys
-set_global_assignment -name SOURCE_FILE db/DE10_LITE_Nios.cmp.rdb
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
