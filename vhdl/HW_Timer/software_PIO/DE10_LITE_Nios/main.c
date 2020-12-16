@@ -16,6 +16,7 @@ int main()
 {
 	printf("KEY/SW/HEX/LEDR Demo! KEY0 Start, KEY1 End.\n");
 	while(1){
+		/*
 		while (IORD(KEY_BASE, 0) & 0x01) {  // KEY0 Start
 			checkSW();
 			IOWR(HEX_BASE, 0, createNumber(count));  // HEX<-SW
@@ -32,6 +33,18 @@ int main()
 
 		usleep(100*1000);
 		printf("count stop count: %d\n", count);
+		*/
+		while (IORD(KEY_BASE, 0) & 0x01) {  // KEY0 Start
+
+		}
+		printf("value 0b10000000*256*256\n");
+		IOWR(HEX_BASE, 0, 0b10000000*256*256);
+
+		while (IORD(KEY_BASE, 0) & 0x01){  // KEY0 End
+
+		}
+		printf("value 0b00000000*256*256");
+		IOWR(HEX_BASE, 0, 0b00000000*256*256);
 	}
 	return 0;
 }

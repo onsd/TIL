@@ -2,9 +2,9 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>2020/10/13 14:52:29</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1602568349288</BspGeneratedUnixTimeStamp>
-        <BspGeneratedLocation>D:\J2001\nakano\DE10_LITE_Nios\software_PIO\DE10_LITE_Nios_bsp</BspGeneratedLocation>
+        <BspGeneratedTimeStamp>Dec 15, 2020 3:52:11 PM</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1608015131808</BspGeneratedUnixTimeStamp>
+        <BspGeneratedLocation>Z:\vhdl\HW_Timer\software_PIO\DE10_LITE_Nios_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\DE10_LITE_Qsys.sopcinfo</SopcDesignFile>
         <JdiFile>default</JdiFile>

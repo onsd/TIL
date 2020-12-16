@@ -142,8 +142,9 @@ ACDS_VERSION := 17.1
 ELF := DE10_LITE_Nios.elf
 
 # Paths to C, C++, and assembly source files.
-C_SRCS := main.c
-CXX_SRCS :=
+C_SRCS += main.c
+C_SRCS += .metadata/.plugins/org.eclipse.cdt.make.core/specs.c
+CXX_SRCS := .metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp
 ASM_SRCS :=
 
 

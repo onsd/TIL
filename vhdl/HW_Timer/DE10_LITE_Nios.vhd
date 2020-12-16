@@ -98,6 +98,13 @@ PORT (
 );
 END COMPONENT;
 
+COMPONENT SegmentDecoder IS
+PORT (
+	Din : IN std_logic_vector(3 DOWNTO 0);
+	decode : OUT std_logic_vector(7 DOWNTO 0)
+);
+END COMPONENT;
+
 signal pll_a, pll_l, reset : std_logic;
 signal hex : std_logic_vector(31 downto 0);
 --signal key4 : std_logic_vector(3 downto 0);
@@ -142,7 +149,18 @@ begin
 	--  			 1 : set	
 	--               2 :clear 
 	--				 31 downto 16 : counter value
+
+
+	Nios: DE10_LITE_Qsys port map (
+		pll_a, pll_l, MAX10_CLK2_50, DRAM_CLK,
+		hex, KEY, LEDR, reset,  
+		DRAM_ADDR, DRAM_BA, DRAM_CAS_N, DRAM_CKE,
+		DRAM_CS_N, DRAM_DQ, dram_dqm, DRAM_RAS_N, DRAM_WE_N,
+		SW
+	); 
+	
 	START <= '1';
+	isStop <= '0';
 	ZERO <= "0000";
 	C0 : UDCounter PORT MAP(clk, reset, START, isSET, SET, ZERO, Cout0, CB0, isStop);
 	EN1 <= CB0 AND START;
@@ -155,21 +173,21 @@ begin
 	C4 : UDCounter PORT MAP(clk, reset, EN4, isSET, SET, ZERO, Cout4, CB4, isStop);
 	EN5 <= CB4 AND CB3 AND CB2 AND CB1 AND CB0 AND START;
 	C5 : UDCounter PORT MAP(clk, reset, EN5, isSET, SET, ZERO, Cout5, CB5, isStop);
+	
+	D0 : SegmentDecoder PORT MAP(Cout0, Dout0);
+	D1 : SegmentDecoder PORT MAP(Cout1, Dout1);
+	D2 : SegmentDecoder PORT MAP(Cout2, Dout2);
+	D3 : SegmentDecoder PORT MAP(Cout3, Dout3);
+	D4 : SegmentDecoder PORT MAP(Cout4, Dout4);
+	D5 : SegmentDecoder PORT MAP(Cout5, Dout5);
 
-	Nios: DE10_LITE_Qsys port map (
-		pll_a, pll_l, MAX10_CLK2_50, DRAM_CLK,
-		hex, KEY, LEDR, reset,  
-		DRAM_ADDR, DRAM_BA, DRAM_CAS_N, DRAM_CKE,
-		DRAM_CS_N, DRAM_DQ, dram_dqm, DRAM_RAS_N, DRAM_WE_N,
-		SW
-	); 
+	HEX0 <= Dout0;
+	HEX1 <= Dout1;
+	HEX2 <= Dout2;
+	HEX3 <= Dout3;
+	HEX4 <= Dout4;
+	HEX5 <= Dout5;
 
-	HEX0 <= hex(7 downto 0);
-	HEX1 <= hex(15 downto 8);
-	HEX2 <= hex(23 downto 16);
-	HEX3 <= hex(31 downto 24);
-	HEX4 <= (others => '0');
-	HEX5 <= (others => '0');
 --	key4 <= "00" & KEY;  -- Compatible to the Other Board
 	DRAM_UDQM <= dram_dqm(1);
 	DRAM_LDQM <= dram_dqm(0);
