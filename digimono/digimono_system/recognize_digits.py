@@ -67,12 +67,12 @@ def recognize_digits(image_path):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # ガウシアンブラー (ぼやかす処理) をする
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-    cv2.imwrite('./out/000_bulurred.png', blurred)
+    # blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    # cv2.imwrite('./out/000_bulurred.png', blurred)
 
     # Canny法による edge 検出
     # ガウシアンブラーをかけているので、曖昧なedge もつながっていると検出できる
-    edged = cv2.Canny(blurred, 25, 200, 255)
+    edged = cv2.Canny(gray, 25, 200, 255)
     cv2.imwrite('./out/00_output_edged.png', edged)
 
     # 矩形検出を行い、大きさごとにならべる

@@ -37,11 +37,11 @@ def main():
             save_csv(qr, cnt)
             # light on GPIO2
             GPIO.output(3, GPIO.HIGH)
+            time.sleep(1)
 
         # light off GPIO2
         GPIO.output(3, GPIO.LOW)
         before_cnt = cnt
-        time.sleep(2)
 
 
 if __name__ == '__main__':
