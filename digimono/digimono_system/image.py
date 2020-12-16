@@ -15,24 +15,24 @@ def get_count(image):
 
 def save_image():
     n = 0
-    cap = cv2.VideoCapture(2)
+    cap = cv2.VideoCapture(0)
     th = 50
-    filename = ""
+    file_path = ""
     while True:
         _, frame = cap.read()
-        # cv2.imshow(window_name, frame)
-        if n == th:
+        # cv2.imshow(window_name, frame) #画像を表示するウィンドウを開く
+        if n == th:  # 一定時間安定するのを待ってから撮影する
             n = 0
-            filename = '{}_{}.{}'.format(
+            file_path = '{}_{}.{}'.format(
                 './out/raw_', datetime.datetime.now().strftime('%Y%m%d%H%M%S%f'), 'jpg')
-            cv2.imwrite(filename, frame)
+            cv2.imwrite(file_path, frame)
             break
 
         n += 1
 
-    # cap.release()
-    # cv2.destroyAllWindows()
-    return filename
+    # cap.release() # ウィンドウを開放する
+    # cv2.destroyAllWindows() # ウィンドウを消す
+    return file_path
 
 
 if __name__ == "__main__":

@@ -2,10 +2,14 @@ from datetime import datetime
 import time
 
 # local files
-import counter
 import image
 import recognize_digits
 from save_csv import save_csv
+
+import RPi.GPIO as GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(3, GPIO.OUT)
 
 
 def get_qr_value():
@@ -14,25 +18,30 @@ def get_qr_value():
 
 
 def main():
+    # バーコードを読み取る
     qr = get_qr_value()
     print("qr value: %s" % qr)
+
     before_cnt = 0
     cnt = 0
     while True:
+        # 画像を撮影する
         image_path = image.save_image()
-        try {
-            cnt = recognize_digits.recognize_digits(image_path)
-        } except Exception as e {
-            print('Recognize_digits error', e)
-            cnt = '-1'
-        }
+        # 撮影した画像から数字を読み取る
+        cnt = recognize_digits.recognize_digits(image_path)
         print('{} current value: {}'.format(
-            int(time.mktime(time.gmtime())), cnt))
+            int(time.mktime(time.gmtime())), cnt))  # 現在時間, カウントの値
+
+        # 前の値と変更があったとき csv に保存する
         if not cnt == before_cnt:
             save_csv(qr, cnt)
+            # light on GPIO2
+            GPIO.output(3, GPIO.HIGH)
 
+        # light off GPIO2
+        GPIO.output(3, GPIO.LOW)
         before_cnt = cnt
-        time.sleep(5)
+        time.sleep(2)
 
 
 if __name__ == '__main__':

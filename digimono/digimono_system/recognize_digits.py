@@ -1,4 +1,4 @@
-# import the necessary packages
+# 必要なパッケージを import
 from imutils.perspective import four_point_transform
 from imutils import contours
 import imutils
@@ -8,8 +8,7 @@ import sys
 import numpy as np
 
 
-# define the dictionary of digit segments so we can identify
-# each digit on the thermostat
+# 7 segment display のどの segment が光っているかを 0,1 で表現する
 DIGITS_LOOKUP = {
     (1, 1, 1, 0, 1, 1, 1): 0,
     (0, 0, 1, 0, 0, 1, 0): 1,
@@ -22,7 +21,7 @@ DIGITS_LOOKUP = {
     (1, 1, 1, 1, 1, 1, 1): 8,
     (1, 1, 1, 1, 0, 1, 1): 9,
 
-    # 人力
+    # 認識していく上でのありがちな間違いを人力で覚える
     (1, 0, 1, 1, 1, 0, 1): 2,
     (0, 1, 1, 1, 0, 0, 0): 4,
     (1, 1, 1, 1, 0, 1, 0): 4,
@@ -51,58 +50,58 @@ def adjust(img, alpha=1.0, beta=0.0):
 
 
 def recognize_digits(image_path):
-    # load the example image
+    # image_path の写真を読み込む
     image = cv2.imread(image_path)
     if image is None:
         print('image is None')
         sys.exit(-1)
 
-    # pre-process the image by resizing it, converting it to
-    # graycale, blurring it, and computing an edge map
+    # 前処理をする
+    # リサイズ
     image = imutils.resize(image, height=500)
     if image is None:
         print('image = imutils.resize(image, height=500) is None')
         sys.exit(-1)
 
+    # グレースケール
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # ガウシアンブラー (ぼやかす処理) をする
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     cv2.imwrite('./out/000_bulurred.png', blurred)
+
+    # Canny法による edge 検出
+    # ガウシアンブラーをかけているので、曖昧なedge もつながっていると検出できる
     edged = cv2.Canny(blurred, 25, 200, 255)
     cv2.imwrite('./out/00_output_edged.png', edged)
-    # find contours in the edge map, then sort them by their
-    # size in descending order
+
+    # 矩形検出を行い、大きさごとにならべる
     cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,
                             cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
     cnts = sorted(cnts, key=cv2.contourArea, reverse=True)
     displayCnt = None
-    # loop over the contours
+    # 見つかった輪郭でループ
     for c in cnts:
-        # approximate the contour
+        # 頂点を探す
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-        # if the contour has four vertices, then we have found
-        # the thermostat display
+        # 4つ頂点が見つかればそれをディスプレイとする
         if len(approx) == 4:
             displayCnt = approx
             break
 
-    # extract the thermostat display, apply a perspective transform
-    # to it
-    # warped = four_point_transform(gray, displayCnt.reshape(4, 2))
+    # ディスプレイだけ切り出す
     output = four_point_transform(image, displayCnt.reshape(4, 2))
-
     height = output.shape[0]
     width = output.shape[1]
     print('height: {}, width: {}'.format(height, width))
-    output_resized = output[33:height-55, 20:width]
-    # output_resized = output[25:height-40, 90:width-30]
-    try:
-        cv2.imwrite('./out/01_output_resized.png', output_resized)
-    except Exception as e:
-        print('imwrite error')
-        output_resized = edged
 
+    # リサイズする
+    output_resized = output[33:height-55, 20:width]
+    cv2.imwrite('./out/01_output_resized.png', output_resized)
+
+    # グレースケール
     gray = cv2.cvtColor(output_resized, cv2.COLOR_BGR2GRAY)
     cv2.imwrite('./out/02_gray.png', gray)
 
@@ -120,10 +119,9 @@ def recognize_digits(image_path):
     img_bitwise = cv2.bitwise_not(img_opening)
     cv2.imwrite("./out/5_bitwise_not.png", img_bitwise)
 
-    # find contours in the thresholded image, then initialize the
-    # digit contours lists
+    # 輪郭を探す
     cnts = cv2.findContours(img_bitwise.copy(), cv2.RETR_EXTERNAL,
-    # cnts = cv2.findContours(img_opening.copy(), cv2.RETR_EXTERNAL,
+                            # cnts = cv2.findContours(img_opening.copy(), cv2.RETR_EXTERNAL,
                             cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
 
@@ -132,37 +130,41 @@ def recognize_digits(image_path):
     original_img = img_bitwise.copy()
     original_img_all = img_bitwise.copy()
 
+    # 輪郭の数だけループ
     for i, cnt in enumerate(cnts):
         img = img_bitwise.copy()
-        # img = img_opening.copy()
         x, y, w, h = cv2.boundingRect(cnt)
         start_point = (x, y)
         end_point = (x + w, y + h)
-        color = (255,255,0)
+        color = (255, 255, 0)
         cv2.rectangle(img, start_point, end_point, color, cv2.LINE_4)
-        cv2.rectangle(original_img_all, start_point, end_point, color, cv2.LINE_4)
+        cv2.rectangle(original_img_all, start_point,
+                      end_point, color, cv2.LINE_4)
 
         print('i:{}, x: {}, y:{}, w: {}, h:{}'.format(i, x, y, w, h))
         cv2.imwrite('./out/result-{}.png'.format(i), img)
 
+        # 大きさがある程度ある => 数字だと判断
         if 5 < w and 30 < h:
             digitCnts.append(cnt)
-            cv2.rectangle(original_img, start_point, end_point, color, cv2.LINE_4)
+            cv2.rectangle(original_img, start_point,
+                          end_point, color, cv2.LINE_4)
 
+        # 文字の幅を覚えておく
         if max_width < w:
             print('max_width is {}'.format(w))
             max_width = w
     cv2.imwrite('./out/result-collect-all.png', original_img)
     cv2.imwrite('./out/result-all.png', original_img_all)
 
+    # 左から右にソートする
     digitCnts = contours.sort_contours(digitCnts, method="left-to-right")[0]
 
     digits = []
-
     for index, c in enumerate(digitCnts):
         # extract the digit ROI
         (x, y, w, h) = cv2.boundingRect(c)
-        
+
         if w*2 < max_width:
             x = x - max_width + 10
             if 0 > x:
@@ -173,27 +175,13 @@ def recognize_digits(image_path):
 
         print('x: {}, y: {}, h: {}, w: {}'.format(x, y, h, w))
         roi = img_bitwise[y:y + h, x:x + w]
-        # print('img: {}, roi:{}'.format(img_bitwise.shape, roi.shape))
-
-        # theta = 2.5  # 回転角
-        # scale = 1.0    # 回転角度・拡大率
-
-        # # 画像の中心座標
-        # oy, ox = int(roi.shape[0]/2), int(roi.shape[1]/2)
-
-        # # 方法2(OpenCV)
-        # R = cv2.getRotationMatrix2D((ox, oy), theta, scale)    # 回転変換行列の算出
-        # roi = cv2.warpAffine(roi, R, gray.shape,
-        #                      flags=cv2.INTER_CUBIC)    # アフィン変換
-
         cv2.imwrite('./out/demo-{}.jpg'.format(x), roi)
 
-        # compute the width and height of each of the 7 segments
-        # we are going to examine
+        # 7セグの位置を計算する
         (roiH, roiW) = roi.shape
         (dW, dH) = (int(roiW * 0.25), int(roiH * 0.15))
         dHC = int(roiH * 0.05)
-        # define the set of 7 segments
+        # 7セグのセグメントの位置を決める
         segments = [
             ((0, 0), (w, dH)),  # top
             ((0, 0), (dW, h // 2)),  # top-left
@@ -204,36 +192,28 @@ def recognize_digits(image_path):
             ((0, h - dH), (w, h))  # bottom
         ]
         on = [0] * len(segments)
-        # loop over the segments
+        # segmentでループ
         for (i, ((xA, yA), (xB, yB))) in enumerate(segments):
-            # extract the segment ROI, count the total number of
-            # thresholded pixels in the segment, and then compute
-            # the area of the segment
+            # 各セグメントごとに占めるピクセルがしきい値を超えているか探す
             segROI = roi[yA: yB, xA: xB]
-            # print('yA: {}, yB: {}, xA: {}, xB: {}'.format(yA, yB, xA, xB))
             cv2.imwrite('./out/demo-{}-{}.jpg'.format(x, i), segROI)
 
             total = cv2.countNonZero(segROI)
             area = (xB - xA) * (yB - yA)
-            # if the total number of non-zero pixels is greater than
-            # 50% of the area, mark the segment as "on"
+            # セグメントごとに 50% を超えていたら そこにあると認識
             thresould = 0.5 if index == len(digitCnts)-1 and i == 0 else 0.35
             # print('i: {}, t: {}'.format(index, thresould))
             if total / float(area) > thresould:
                 on[i] = 1
-        # lookup the digit and draw it on the image
-        # digits.append(tuple(on))
-        # print(tuple(on))
+
+        # 数字をみつける
         digit = DIGITS_LOOKUP.get(tuple(on), '?')
         print('predict: {}'.format(digit))
         if digit == '?':
             print('recognized: {}'.format(on))
         digits.append(digit)
 
-        # draw rectangle to show estimated numbers
-        # cv2.rectangle(output, (x, y), (x + w, y + h), (0, 255, 0), 1)
-        # cv2.putText(output, str(digit), (x - 10, y - 10),
-        #             cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
+    # 数字を返す
     return "".join(map(str, digits))
 
 
