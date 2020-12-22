@@ -1,0 +1,65 @@
+/*
+ * "KEY/SW/HEX/LEDR" example.
+ */
+
+#include <stdio.h>
+#include "terasic_includes.h"
+#include "system.h"
+#include "alt_types.h"
+
+int main()
+{
+
+  int seg[10] = {0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110, 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01101111};
+  int count = 0;
+  int a,b,c,d,s;
+  int flag = 0;
+
+
+  printf("KEY/SW/HEX/LEDR Demo! KEY0 Start, KEY1 End.\n");
+  while (IORD(KEY_BASE, 0) & 0x1) {  // KEY0 Start
+	IOWR(HEX_BASE, 0, 0);  // HEX Clear
+	IOWR(LEDR_BASE, 0, 0); // LEDR Clear
+	flag = 0;
+  }
+  while(1) {
+	if(IORD(KEY_BASE, 0) == 0x1){
+		flag = 2;
+		while(IORD(KEY_BASE, 0) == 0x1);
+	}
+	if(flag == 2){
+		count = IORD(SW_BASE, 0);
+	}
+	if(IORD(KEY_BASE, 0) == 0x2){
+		if(flag != 1){
+			flag = 1;
+		}else{
+			flag = 0;
+		}
+		while(IORD(KEY_BASE, 0) == 0x2);
+	}
+
+	IOWR(LEDR_BASE, 0, IORD(KEY_BASE, 0));
+	/*
+	a = count / 600;
+	b = count % 600 / 60;
+	c = (count % 600) % 60 / 10;
+	d = count % 10;
+	s = seg[a]*256*256*256  + seg[b]*256*256 + seg[c]*256 +seg[d] + 0b10000000*256*256;
+	*/
+	a = count / 16;
+	b = count % 16;
+	if(a>=10) a = 9;
+	if(b>=10) b = 9;
+	s = seg[a]*256*256*256  + seg[b]*256*256;
+	//s = 0b00111111*256*256*256  + 0b00000110*256*256 + 0b01011011*256 +0b01001111;
+	IOWR(HEX_BASE, 0, s);  // HEX<-count
+	//IOWR(LEDR_BASE, 0, IORD(SW_BASE, 0));  // LEDR<-SW
+	if((count > 0) && (IORD(KEY_BASE, 0) & 0x3) && (flag == 1)){
+		count--;
+	}
+	//usleep(100*1000);  // 1us Sleep
+	usleep(100*100);
+  }
+  return 0;
+}
