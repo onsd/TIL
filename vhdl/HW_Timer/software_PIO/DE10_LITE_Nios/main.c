@@ -37,14 +37,15 @@ int main()
 		while (IORD(KEY_BASE, 0) & 0x01) {  // KEY0 Start
 
 		}
-		printf("value 0b10000000*256*256\n");
-		IOWR(HEX_BASE, 0, 0b10000000*256*256);
-
+		printf("value 0b01\n");
+		IOWR(HEX_BASE, 0, 0b01);
+		usleep(100*1000);
 		while (IORD(KEY_BASE, 0) & 0x01){  // KEY0 End
 
 		}
-		printf("value 0b00000000*256*256");
-		IOWR(HEX_BASE, 0, 0b00000000*256*256);
+		printf("value 0b00000000\n");
+		IOWR(HEX_BASE, 0, 0b00000000);
+		usleep(100*1000);
 	}
 	return 0;
 }

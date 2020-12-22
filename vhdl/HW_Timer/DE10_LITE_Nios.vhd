@@ -160,6 +160,7 @@ begin
 	); 
 	
 	START <= '1';
+	
 	isStop <= '0';
 	ZERO <= "0000";
 	C0 : UDCounter PORT MAP(clk, reset, START, isSET, SET, ZERO, Cout0, CB0, isStop);
