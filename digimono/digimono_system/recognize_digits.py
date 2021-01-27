@@ -218,6 +218,6 @@ def recognize_digits(image_path):
 
 
 if __name__ == "__main__":
-    image_path = './test/2502_full.jpg'
+    image_path = './test/raw__20201216015045376235.jpg'
     digits = recognize_digits(image_path)
     print(digits)
