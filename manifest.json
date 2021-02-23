@@ -16,9 +16,12 @@
     "page_action": {
         "default_popup": "popup.html",
         "default_icon": {
-            "32": "images/get_started32.png"
+            "32": "images/matreshka32.png"
         }
     },
-    "options_page": "option.html",
+    "icons": {
+        "48": "images/matreshka48.png"
+    },
+    "options_page": "options.html",
     "manifest_version": 2
 }
