@@ -12,7 +12,8 @@ jobs:
       - run: |
           echo "Comment on PR #${{ github.event.issue.number }}"
 
-  label-A:
+  label:
+    if: ${{ github.event.issue.pull_request }}
     #    if: (github.event.issue.pull_request != null) && (github.event.comment.body == '/label A)
     runs-on: ubuntu-latest
     steps:
@@ -20,9 +21,18 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            const env = {"A":"a", "a":"a", "B": "b", "b": "b"}
+            const body = github.event.issue.body.split(' ')
+            if (body.length != 2) {
+              return
+            }
+            const label = env[body[1]]
+            if (label == null) {
+              return
+            }
             github.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              labels: ['A']
+              labels: [label]
             })
