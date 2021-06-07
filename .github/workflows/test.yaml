@@ -4,7 +4,6 @@ on:
 jobs:
   label:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/preview')
-    #    if: (github.event.issue.pull_request != null) && (github.event.comment.body == '/label A)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v4
@@ -14,10 +13,12 @@ jobs:
             const env = {"A":"a", "a":"a", "B": "b", "b": "b"}
             const body = context.payload.comment.body.split(' ')
             if (body.length != 2) {
+              console.log('invalid comment', body)
               return
             }
             const label = env[body[1]]
             if (label == null) {
+              console.log("invalid stage. body was", body)
               return
             }
             github.issues.addLabels({
