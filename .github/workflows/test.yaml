@@ -1,17 +1,7 @@
 name: preview by comment
 on:
   issue_comment:
-
 jobs:
-  pr_commented:
-    # This job only runs for pull request comments
-    name: PR comment
-    if: ${{ github.event.issue.pull_request }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "Comment on PR #${{ github.event.issue.number }}"
-
   label:
     if: ${{ github.event.issue.pull_request }}
     #    if: (github.event.issue.pull_request != null) && (github.event.comment.body == '/label A)
@@ -21,6 +11,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            console.log(context)
             const env = {"A":"a", "a":"a", "B": "b", "b": "b"}
             const body = github.event.issue.body.split(' ')
             if (body.length != 2) {
