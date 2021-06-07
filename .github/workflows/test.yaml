@@ -11,9 +11,8 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(context)
             const env = {"A":"a", "a":"a", "B": "b", "b": "b"}
-            const body = github.event.issue.body.split(' ')
+            const body = context.payload.comment.body.split(' ')
             if (body.length != 2) {
               return
             }
