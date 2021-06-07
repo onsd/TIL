@@ -3,13 +3,13 @@ on:
   issue_comment:
 jobs:
   label:
-    if: ${{ github.event.issue.pull_request }}
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/preview')
     #    if: (github.event.issue.pull_request != null) && (github.event.comment.body == '/label A)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v4
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const env = {"A":"a", "a":"a", "B": "b", "b": "b"}
             const body = context.payload.comment.body.split(' ')
