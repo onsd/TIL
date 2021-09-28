@@ -1,39 +1,62 @@
-import './App.css';
-import * as React from 'react'
+import "./App.css";
+import * as React from "react";
 
-const Square: React.FC = () => {
-  return <button className="square">{/* TODO */}</button>;
-}
+type SquareProps = {
+  board: string[];
+  location: number;
+  onclick: (i: number) => void;
+};
 
-const renderSquare = (i : number) => {
-  return <Square />;
-}
+const Square: React.FC<SquareProps> = (props: SquareProps) => {
+  return (
+    <button className="square" onClick={() => props.onclick(props.location)}>
+      {props.board[props.location]}
+    </button>
+  );
+};
+
+const renderSquare = (
+  board: string[],
+  location: number,
+  clickHandler: (i: number) => void
+) => {
+  return <Square board={board} location={location} onclick={clickHandler} />;
+};
 
 const Board: React.FC = () => {
   const status = "Next player: X";
+  const [board, setBoard] = React.useState<string[]>(Array(9).fill(null));
+
+  const clickHandler = (i: number) => {
+    console.log(board);
+    const state = board;
+    state[i] = "X";
+    setBoard([...state]);
+  };
+
   return (
     <div>
       <div className="status">{status}</div>
-        <div className="board-row">
-          {renderSquare(0)}
-          {renderSquare(1)}
-          {renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {renderSquare(3)}
-          {renderSquare(4)}
-          {renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {renderSquare(6)}
-          {renderSquare(7)}
-          {renderSquare(8)}
-        </div>
+      <div className="board-row">
+        {renderSquare(board, 0, clickHandler)}
+        {renderSquare(board, 1, clickHandler)}
+        {renderSquare(board, 2, clickHandler)}
+      </div>
+      <div className="board-row">
+        {renderSquare(board, 3, clickHandler)}
+        {renderSquare(board, 4, clickHandler)}
+        {renderSquare(board, 5, clickHandler)}
+      </div>
+      <div className="board-row">
+        {renderSquare(board, 6, clickHandler)}
+        {renderSquare(board, 7, clickHandler)}
+        {renderSquare(board, 8, clickHandler)}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-const Game :React.FC = () => {
+const Game: React.FC = () => {
   return (
     <div className="game">
       <div className="game-board">
@@ -44,13 +67,11 @@ const Game :React.FC = () => {
         <ol>{/* TODO */}</ol>
       </div>
     </div>
-  ); 
-}
+  );
+};
 
 function App() {
-  return (
-    <Game />
-  );
+  return <Game />;
 }
 
 export default App;
