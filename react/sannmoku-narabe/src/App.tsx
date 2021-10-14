@@ -2,7 +2,7 @@ import "./App.css";
 import * as React from "react";
 
 type SquareProps = {
-  board: string[];
+  board: BoardValue[];
   location: number;
   onclick: (i: number) => void;
 };
@@ -16,17 +16,19 @@ const Square: React.FC<SquareProps> = (props: SquareProps) => {
 };
 
 const renderSquare = (
-  board: string[],
+  board: BoardValue[],
   location: number,
   clickHandler: (i: number) => void
 ) => {
   return <Square board={board} location={location} onclick={clickHandler} />;
 };
 
+type BoardValue = "X" | "O" | null
 const Board: React.FC = () => {
   const status = "Next player: X";
-  const [board, setBoard] = React.useState<string[]>(Array(9).fill(null));
-
+  const [board, setBoard] = React.useState<BoardValue[]>(Array(9).fill(null));
+  const [history, setHistory] = React.useState<void[]>()
+  
   const clickHandler = (i: number) => {
     console.log(board);
     const state = board;
