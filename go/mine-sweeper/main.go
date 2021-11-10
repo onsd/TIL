@@ -9,11 +9,9 @@ import (
 func main() {
 	m := minesweeper.NewMineSweeper(10)
 
-	var x, y int
 	for {
 		m.PrintField()
-		fmt.Printf("enter \ny x >")
-		fmt.Scan(&x, &y)
+		x, y := inputPosition(m.Size)
 		if err := m.Open(x, y); err != nil {
 			if !errors.Is(err, minesweeper.ErrBomb) {
 				fmt.Println(err)
@@ -33,4 +31,17 @@ func main() {
 		}
 	}
 
+}
+
+func inputPosition(size int) (x, y int) {
+	for {
+		fmt.Printf("enter\n> ")
+		fmt.Scan(&x, &y)
+		if size <= x || size <= y {
+			fmt.Printf("you must enter number between 0 to %d\n", size)
+			continue
+		}
+		break
+	}
+	return x, y
 }
