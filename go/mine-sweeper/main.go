@@ -1,8 +1,10 @@
 package main
 
-import "minesweeper/pkg/minesweeper"
+import (
+	"minesweeper/pkg/minesweeper"
+)
 
 func main() {
-	m := minesweeper.NewMineSweeper(10)
+	m := minesweeper.NewMineSweeper(5)
 	m.PrintField()
 }

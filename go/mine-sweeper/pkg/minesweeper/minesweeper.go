@@ -10,6 +10,7 @@ type MineSweeper struct {
 type Cell struct {
 	isBomb   bool
 	isOpened bool
+	aroundBombNum int
 }
 
 func NewMineSweeper(size int) MineSweeper {
