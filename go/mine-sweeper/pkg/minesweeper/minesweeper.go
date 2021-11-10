@@ -65,3 +65,27 @@ func (m *MineSweeper) Open(x, y int) error {
 	}
 	return nil
 }
+
+func (m *MineSweeper) CheckWin() bool {
+	win := true
+	// 全部のマスをみる
+	for y := 0; y < m.Size; y++ {
+		for x := 0; x < m.Size; x++ {
+			c := &m.Field[y][x]
+			// 爆弾のマスを開けている場合勝ちではない
+			if c.isBomb && c.isOpened {
+				win = win && false
+				continue
+			}
+
+			// 爆弾では無いマスを開けていない場合、勝ちではない
+			if !c.isOpened && !c.isBomb {
+				win = win && false
+				continue
+			}
+			// マスを開けていて、爆弾でない
+			win = win && true
+		}
+	}
+	return win
+}
