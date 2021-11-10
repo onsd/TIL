@@ -7,14 +7,14 @@ type MineSweeper struct {
 	Size  int
 }
 
-type Cell struct {
-	isBomb   bool
-	isOpened bool
-	aroundBombNum int
-}
-
 func NewMineSweeper(size int) MineSweeper {
 	f := createField(size)
+	aroundcells := getAroundCells(Position{
+		x: 1,
+		y: 1,
+	}, f)
+
+	fmt.Println(aroundcells)
 	return MineSweeper{
 		Field: f,
 		Size:  size,
@@ -30,26 +30,10 @@ func (m *MineSweeper) PrintField() {
 			} else if m.Field[y][x].isOpened {
 				cell = "O"
 			} else {
-				cell = "?"
+				cell = fmt.Sprintf("%d", m.Field[y][x].aroundBombNum)
 			}
 			fmt.Printf("%s ", cell)
 		}
 		fmt.Println()
 	}
-}
-
-func createField(size int) [][]Cell {
-	Field := make([][]Cell, size)
-	for y := 0; y < size; y++ {
-		Field[y] = make([]Cell, size)
-		for x := 0; x < size; x++ {
-			c := Cell {
-				isBomb:   false,
-				isOpened: false,
-			}
-			Field[y][x] = c
-		}
-	}
-
-	return Field
 }
