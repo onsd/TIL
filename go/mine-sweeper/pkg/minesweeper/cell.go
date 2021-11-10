@@ -1,7 +1,6 @@
 package minesweeper
 
 import (
-	"fmt"
 	"math/rand"
 )
 
@@ -15,12 +14,7 @@ type Position struct {
 	x int
 	y int
 }
-func pos(x, y int) Position {
-	return Position{
-		x: x,
-		y: y,
-	}
-}
+
 func createField(size int) [][]Cell {
 	Field := make([][]Cell, size)
 	for y := 0; y < size; y++ {
@@ -38,12 +32,10 @@ func createField(size int) [][]Cell {
 		}
 	}
 
+	// 周りにいくつ爆弾があるか数える
 	for y := 0; y < size; y++ {
 		for x := 0; x < size; x++ {
-			cells := getAroundCells(Position{
-				x: x,
-				y: y,
-			}, Field)
+			cells := getAroundCells(pos(x, y), Field)
 			count := countBomb(cells...)
 			Field[y][x].aroundBombNum = count
 		}
@@ -63,7 +55,6 @@ func createField(size int) [][]Cell {
 //  [3][0]  [3][1]  [3][2]  [3][3]  [3][4]
 //  [4][0]  [4][1]  [4][2]  [4][3]  [4][4]
 
-
 func getAroundCells(pos Position, field [][]Cell) []Cell {
 	size := len(field)
 	var cells []Cell
@@ -74,7 +65,6 @@ func getAroundCells(pos Position, field [][]Cell) []Cell {
 				continue
 			}
 			if 0 <= pos.y-y && pos.y-y < size && 0 <= pos.x-x && pos.x-x < size {
-				fmt.Printf("pos %d, %d\n", pos.y-y, pos.x-x)
 				cells = append(cells, field[pos.y-y][pos.x-x])
 			}
 		}
@@ -91,4 +81,12 @@ func countBomb(cells ...Cell) int {
 	}
 
 	return count
+}
+
+// util
+func pos(x, y int) Position {
+	return Position{
+		x: x,
+		y: y,
+	}
 }
