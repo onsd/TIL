@@ -1,8 +1,6 @@
 package minesweeper
 
-import (
-	"math/rand"
-)
+import "math/rand"
 
 type Cell struct {
 	isBomb        bool

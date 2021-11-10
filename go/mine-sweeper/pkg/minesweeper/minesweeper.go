@@ -49,5 +49,19 @@ func (m *MineSweeper) Open(x, y int) error {
 	if m.Field[y][x].isBomb {
 		return ErrBomb
 	}
+
+	// 周りに爆弾がないとき、周りのマスもあける
+	if m.Field[y][x].aroundBombNum == 0 {
+		for _, ey := range []int{-1, 0, 1} {
+			for _, ex := range []int{-1, 0, 1} {
+				if ex == 0 && ey == 0 {
+					continue
+				}
+				if 0 <= y-ey && y-ey < m.Size && 0 <= x-ex && x-ex < m.Size {
+					m.Open(x-ex, y-ey)
+				}
+			}
+		}
+	}
 	return nil
 }
