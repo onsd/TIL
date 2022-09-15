@@ -27,13 +27,12 @@ body:
 incident label の定義
 - AAA / BBB
   - hogehoge
-
 - AAA / BBB
   - hogehoge
-
 - AAA / BBB
   - hoge
   - hoge
+
   - type: input
     id: incident-label
     attributes:
