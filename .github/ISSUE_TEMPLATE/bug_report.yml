@@ -24,14 +24,14 @@ body:
   - type: markdown
     attributes:
       value: |
-incident label の定義
-- AAA / BBB
-  - hogehoge
-- AAA / BBB
-  - hogehoge
-- AAA / BBB
-  - hoge
-  - hoge
+        incident label の定義
+        - AAA / BBB
+          - hogehoge
+        - AAA / BBB
+          - hogehoge
+        - AAA / BBB
+          - hoge
+          - hoge
 
   - type: input
     id: incident-label
@@ -76,10 +76,10 @@ incident label の定義
       label: Timeline
       description: 全体的なタイムラインを記入してください
       placeholder: |
-- 2022/09/14 15:10 インシデント発生
-- 2022/09/14 15:20 インシデント確認
-- 2022/09/14 15:25 revert PR を merge
-- 2022/09/14 15:30 インシデント復旧
+        - 2022/09/14 15:10 インシデント発生
+        - 2022/09/14 15:20 インシデント確認
+        - 2022/09/14 15:25 revert PR を merge
+        - 2022/09/14 15:30 インシデント復旧
   - type: input
     id: incident-caused-at
     attributes:
