@@ -15,4 +15,4 @@ jobs:
         id: issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/bug_report.yml
-      - run: echo '${{ steps.issue-parser.outputs.jsonString }}''
+      - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
