@@ -5,58 +5,102 @@ labels: ["bug", "triage"]
 assignees:
   - octocat
 body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: 全体を示す一言を書いてください
+      placeholder: hogefuga
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Reference
+      description: 対応 issue へのリンクを書いてください
+      placeholder: https://github.com/onsd/TIL/issues/1
+    validations:
+      required: true
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+incident label の定義
+- AAA / BBB
+  - hogehoge
+
+- AAA / BBB
+  - hogehoge
+
+- AAA / BBB
+  - hoge
+  - hoge
   - type: input
-    id: contact
+    id: incident-label
     attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
+      label: Incident Label
+      description: インシデントの分類について書いてください。定義については上記を参照してください。
+      placeholder: a - b - c
+    validations:
+      required: true
+  - type: textarea
+    id: root-causes
+    attributes:
+      label: Root Causes
+      description: incident, trouble の原因がわかっていれば書いてください。
+      placeholder: Tell us what you see!
     validations:
       required: false
   - type: textarea
-    id: what-happened
+    id: trigger
     attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
-      value: "A bug happened!"
+      label: Trigger
+      description: この事象が発生する条件を書いてください
+      placeholder: hoge
     validations:
-      required: true
-  - type: dropdown
-    id: version
-    attributes:
-      label: Version
-      description: What version of our software are you running?
-      options:
-        - 1.0.2 (Default)
-        - 1.0.3 (Edge)
-    validations:
-      required: true
-  - type: dropdown
-    id: browsers
-    attributes:
-      label: What browsers are you seeing the problem on?
-      multiple: true
-      options:
-        - Firefox
-        - Chrome
-        - Safari
-        - Microsoft Edge
+      required: false
   - type: textarea
-    id: logs
+    id: resolution
     attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
-      render: shell
-  - type: checkboxes
-    id: terms
+      label: Resolution
+      description: incident 中に効果があった対応を書く。何もしなければ、「自然復旧」などを書く 
+    validations:
+      required: true
+  - type: textarea
+    id: detection
     attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com)
-      options:
-        - label: I agree to follow this project's Code of Conduct
-          required: true
+      label: Detection
+      description: 検知したError を画面キャプチャや url をあわせて貼ってください
+      placeholder: "url: https://example.com"
+  - type: textarea
+    id: timeline
+    attributes:
+      label: Timeline
+      description: 全体的なタイムラインを記入してください
+      placeholder: |
+- 2022/09/14 15:10 インシデント発生
+- 2022/09/14 15:20 インシデント確認
+- 2022/09/14 15:25 revert PR を merge
+- 2022/09/14 15:30 インシデント復旧
+  - type: input
+    id: incident-caused-at
+    attributes:
+      label: Incident Caused At
+      description: インシデント発生時間を書いてください
+      placeholder: "2022/09/14 15:10"
+  - type: input
+    id: incident-checked-at
+    attributes:
+      label: Incident Caused At
+      description: インシデント確認時間を書いてください
+      placeholder: "2022/09/14 15:10"
+  - type: input
+    id: incident-recovered-at
+    attributes:
+      label: Incident Caused At
+      description: インシデント復旧時間を書いてください
+      placeholder: "2022/09/14 15:10"
+  - type: textarea
+    id: todo
+    attributes:
+      label: TODO
+      description: 今後行う事があれば書いてください
