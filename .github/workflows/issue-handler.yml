@@ -1,12 +1,11 @@
 name: parse issue body
 on:
   issues:
-    types:
-    - opened
+
 
 jobs:
   place_order:
-    if: contains(github.event.issues.labels.*.name, 'Bug')
+    if: contains(github.event.issues.labels.*.name, 'bug')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
