@@ -20,5 +20,5 @@ jobs:
         with:
           script: |
            console.log(context)
-           const json = JSON.parse('${{ steps.issue-parser.outputs.jsonString }}')
+           const json = ${{ steps.issue-parser.outputs.jsonString }}
            console.log(json)
