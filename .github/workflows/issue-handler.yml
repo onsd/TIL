@@ -15,4 +15,4 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/bug_report.yml
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
-      - run: echo '${{ github.event }}'
+      - run: echo '${{ toJson(github.event) }}'
