@@ -16,4 +16,3 @@ jobs:
         with:
           template-path: .github/ISSUE_TEMPLATE/bug_report.yml
       - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
-      - run: echo '${{ toJson(github.event.issue.labels) }}'
