@@ -15,4 +15,10 @@ jobs:
         id: issue-parser
         with:
           template-path: .github/ISSUE_TEMPLATE/bug_report.yml
-      - run: echo '${{ steps.issue-parser.outputs.jsonString }}'
+      - name: View context attributes
+        uses: actions/github-script@v6
+        with:
+          script: |
+           console.log(context)
+           const json = JSON.parse('${{ steps.issue-parser.outputs.jsonString }}')
+           console.log(json)
