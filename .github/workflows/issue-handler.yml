@@ -19,6 +19,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-           console.log(context)
            const json = ${{ steps.issue-parser.outputs.jsonString }}
            console.log(json)
+           console.log(json.rootCauses)

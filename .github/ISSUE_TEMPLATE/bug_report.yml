@@ -34,7 +34,7 @@ body:
           - hoge
 
   - type: input
-    id: incident-label
+    id: incidentLabel
     attributes:
       label: Incident Label
       description: インシデントの分類について書いてください。定義については上記を参照してください。
@@ -42,7 +42,7 @@ body:
     validations:
       required: true
   - type: textarea
-    id: root-causes
+    id: rootCauses
     attributes:
       label: Root Causes
       description: incident, trouble の原因がわかっていれば書いてください。
@@ -81,19 +81,19 @@ body:
         - 2022/09/14 15:25 revert PR を merge
         - 2022/09/14 15:30 インシデント復旧
   - type: input
-    id: incident-caused-at
+    id: incidentCausedAt
     attributes:
       label: Incident Caused At
       description: インシデント発生時間を書いてください
       placeholder: "2022/09/14 15:10"
   - type: input
-    id: incident-checked-at
+    id: incidentAcknowledgedAt
     attributes:
       label: Incident Acknowledged At
       description: インシデント確認時間を書いてください
       placeholder: "2022/09/14 15:10"
   - type: input
-    id: incident-recovered-at
+    id: serviceRecoveredAt
     attributes:
       label: Service Recovered At
       description: インシデント復旧時間を書いてください
