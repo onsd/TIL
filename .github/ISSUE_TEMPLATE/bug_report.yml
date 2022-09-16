@@ -14,11 +14,11 @@ body:
     validations:
       required: true
   - type: input
-    id: reference
+    id: impact
     attributes:
-      label: Reference
-      description: 対応 issue へのリンクを書いてください
-      placeholder: https://github.com/onsd/TIL/issues/1
+      label: Impact
+      description: トリアージした結果を書いてください
+      placeholder: hogefuga
     validations:
       required: true
   - type: markdown
