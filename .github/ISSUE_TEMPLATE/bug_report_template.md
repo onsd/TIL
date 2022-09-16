@@ -1,5 +1,5 @@
 ---
-name: ir
+name: bug_report_template
 about: cir
 title: "hoge"
 labels: bug
