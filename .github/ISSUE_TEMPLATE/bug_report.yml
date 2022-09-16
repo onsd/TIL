@@ -89,13 +89,13 @@ body:
   - type: input
     id: incident-checked-at
     attributes:
-      label: Incident Caused At
+      label: Incident Acknowledged At
       description: インシデント確認時間を書いてください
       placeholder: "2022/09/14 15:10"
   - type: input
     id: incident-recovered-at
     attributes:
-      label: Incident Caused At
+      label: Service Recovered At
       description: インシデント復旧時間を書いてください
       placeholder: "2022/09/14 15:10"
   - type: textarea
