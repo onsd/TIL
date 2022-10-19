@@ -1,0 +1,11 @@
+apiVersion: fork.k8s.wantedly.com/v1beta1
+kind: ForkManager
+metadata:
+  name: kubefork-manager
+  namespace: kubefork-controller-system
+spec:
+  ambassadorID: --apiVersion-v3alpha1-only--default
+  headerKey: x-fork-identifier
+#  upstreams:
+#  - host: example.com
+#    original: your-service:80

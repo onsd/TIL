@@ -1,0 +1,12 @@
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: test-app
+  namespace: test-app
+spec:
+  ambassador_id:
+    - --apiVersion-v3alpha1-only--default
+  docs:
+    path: /.ambassador-internal/openapi-docs
+  prefix: /
+  service: test-app
