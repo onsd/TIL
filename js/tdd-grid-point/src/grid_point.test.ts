@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { GridPoint } from "./grid_point";
+import { GridPoint, GridPoints } from "./grid_point";
 
 describe("GridPoint", () => {
 	it("generates gridpoint", () => {
@@ -14,37 +14,70 @@ describe("GridPoint", () => {
 
 		expect(gridPoint.getNotation()).toBe("(1, 2)");
 	});
-});
+	describe("Coordinates", () => {
+		it("return true if two GridPoints have same coordinates", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(1, 2);
 
-describe("Coordinates", () => {
-	it("return true if two GridPoints have same coordinates", () => {
-		const coordinatesA = new GridPoint(1, 2);
-		const coordinatesB = new GridPoint(1, 2);
+			expect(coordinatesA.hasSomeCoordinates(coordinatesB)).toBe(true);
+		});
 
-		expect(coordinatesA.hasSomeCoordinates(coordinatesB)).toBe(true);
+		it("return false if two GridPoints have different coordinates", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(3, 4);
+
+			expect(coordinatesA.hasSomeCoordinates(coordinatesB)).toBe(false);
+		});
 	});
 
-	it("return false if two GridPoints have different coordinates", () => {
-		const coordinatesA = new GridPoint(1, 2);
-		const coordinatesB = new GridPoint(3, 4);
-
-		expect(coordinatesA.hasSomeCoordinates(coordinatesB)).toBe(false);
+	describe("Neighbor", () => {
+		const testCase = [
+			[new GridPoint(1, 2), new GridPoint(2, 2), true],
+			[new GridPoint(3, 2), new GridPoint(2, 2), true],
+			[new GridPoint(2, 1), new GridPoint(2, 2), true],
+			[new GridPoint(2, 3), new GridPoint(2, 2), true],
+			[new GridPoint(1, 1), new GridPoint(2, 2), false],
+			[new GridPoint(3, 1), new GridPoint(2, 2), false],
+			[new GridPoint(1, 3), new GridPoint(2, 2), false],
+			[new GridPoint(3, 3), new GridPoint(2, 2), false],
+		];
+		it.each(testCase)("check if %p is neighbor of %p", (a, b, expected) => {
+			expect((a as GridPoint).isNeighbor(b as GridPoint)).toBe(expected);
+		});
 	});
 });
 
-describe("Neighbor", () => {
-	const testCase = [
-		[new GridPoint(1, 2), new GridPoint(2, 2), true],
-		[new GridPoint(3, 2), new GridPoint(2, 2), true],
-		[new GridPoint(2, 1), new GridPoint(2, 2), true],
-		[new GridPoint(2, 3), new GridPoint(2, 2), true],
-		[new GridPoint(1, 1), new GridPoint(2, 2), false],
-		[new GridPoint(3, 1), new GridPoint(2, 2), false],
-		[new GridPoint(1, 3), new GridPoint(2, 2), false],
-		[new GridPoint(3, 3), new GridPoint(2, 2), false],
-	];
-	it.each(testCase)("check if %p is neighbor of %p", (a, b, expected) => {
-		expect((a as GridPoint).isNeighbor(b as GridPoint)).toBe(expected);
+describe("GridPoints", () => {
+	describe("calclate contains", () => {
+		it("returns true if GridPoints contains GridPoint", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(3, 4);
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+			expect(gridPoints.isContained(new GridPoint(1, 2))).toBe(true);
+		});
+
+		it("returns false if GridPoints not contains GridPoint", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(3, 4);
+			const coordinatesC = new GridPoint(4, 5);
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+			expect(gridPoints.isContained(coordinatesC)).toBe(false);
+		});
+	});
+
+	describe("Connected", () => {
+		it("returns true if GridPoints are connected", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(1, 3);
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+			expect(gridPoints.isConnected()).toBe(true);
+		});
+		it("returns false if GridPoints are not connected", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(3, 4);
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+			expect(gridPoints.isConnected()).toBe(false);
+		});
 	});
 });
 

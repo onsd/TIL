@@ -20,3 +20,13 @@ export class GridPoint {
 		);
 	}
 }
+
+export class GridPoints {
+	constructor(public a: GridPoint, public b: GridPoint) {}
+	public isContained(other: GridPoint): boolean {
+		return this.a.equals(other) || this.b.equals(other);
+	}
+	public isConnected(): boolean {
+		return this.a.isNeighbor(this.b);
+	}
+}
