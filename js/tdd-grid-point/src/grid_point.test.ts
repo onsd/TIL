@@ -49,30 +49,76 @@ describe("GridPoint", () => {
 
 describe("GridPoints", () => {
 	describe("calclate contains", () => {
-		it("returns true if GridPoints contains GridPoint", () => {
-			const coordinatesA = new GridPoint(1, 2);
-			const coordinatesB = new GridPoint(3, 4);
-			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
-			expect(gridPoints.isContained(new GridPoint(1, 2))).toBe(true);
+		describe("Two Gridpoints", () => {
+			it("returns true if Two GridPoints contains GridPoint", () => {
+				const coordinatesA = new GridPoint(1, 2);
+				const coordinatesB = new GridPoint(3, 4);
+				const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+				expect(gridPoints.isContained(new GridPoint(1, 2))).toBe(true);
+			});
+
+			it("returns false if Two GridPoints not contains GridPoint", () => {
+				const coordinatesA = new GridPoint(1, 2);
+				const coordinatesB = new GridPoint(3, 4);
+				const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+				expect(gridPoints.isContained(new GridPoint(4, 5))).toBe(false);
+			});
 		});
 
-		it("returns false if GridPoints not contains GridPoint", () => {
-			const coordinatesA = new GridPoint(1, 2);
-			const coordinatesB = new GridPoint(3, 4);
-			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
-			expect(gridPoints.isContained(new GridPoint(4, 5))).toBe(false);
+		describe("Three Gridpoints", () => {
+			it("returns true if Three GridPoints contains GridPoint", () => {
+				const coordinatesA = new GridPoint(1, 2);
+				const coordinatesB = new GridPoint(3, 4);
+				const coordinatesC = new GridPoint(5, 6);
+				const gridPoints = new GridPoints(
+					coordinatesA,
+					coordinatesB,
+					coordinatesC,
+				);
+				expect(gridPoints.isContained(new GridPoint(1, 2))).toBe(true);
+			});
+
+			it("returns false if Three GridPoints not contains GridPoint", () => {
+				const coordinatesA = new GridPoint(1, 2);
+				const coordinatesB = new GridPoint(3, 4);
+				const coordinatesC = new GridPoint(5, 6);
+				const gridPoints = new GridPoints(
+					coordinatesA,
+					coordinatesB,
+					coordinatesC,
+				);
+				expect(gridPoints.isContained(new GridPoint(4, 5))).toBe(false);
+			});
+		});
+		describe("Four Gridpoints", () => {
+			it("throw error", () => {
+				const coordinatesA = new GridPoint(1, 2);
+				const coordinatesB = new GridPoint(3, 4);
+				const coordinatesC = new GridPoint(5, 6);
+				const coordinatesD = new GridPoint(7, 8);
+
+				expect(
+					() =>
+						new GridPoints(
+							coordinatesA,
+							coordinatesB,
+							coordinatesC,
+							coordinatesD,
+						),
+				).toThrow(Error);
+			});
 		});
 	});
 
 	describe("Connected", () => {
-		it("returns true if GridPoints are connected", () => {
+		it("returns true if Two GridPoints are connected", () => {
 			const coordinatesA = new GridPoint(1, 2);
 			const coordinatesB = new GridPoint(1, 3);
 			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
 
 			expect(gridPoints.isConnected()).toBe(true);
 		});
-		it("returns false if GridPoints are not connected", () => {
+		it("returns false if Two GridPoints are not connected", () => {
 			const coordinatesA = new GridPoint(1, 2);
 			const coordinatesB = new GridPoint(3, 4);
 			const gridPoints = new GridPoints(coordinatesA, coordinatesB);

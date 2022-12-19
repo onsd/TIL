@@ -22,11 +22,22 @@ export class GridPoint {
 }
 
 export class GridPoints {
-	constructor(public a: GridPoint, public b: GridPoint) {}
+	public coordinates: GridPoint[];
+	constructor(...coordinates: GridPoint[]) {
+		if (coordinates.length > 3) {
+			throw new Error("invalid length");
+		}
+		this.coordinates = coordinates;
+	}
 	public isContained(other: GridPoint): boolean {
-		return this.a.equals(other) || this.b.equals(other);
+		return this.coordinates.map((c) => c.equals(other)).some((c) => c === true);
 	}
 	public isConnected(): boolean {
-		return this.a.isNeighbor(this.b);
+		// FIXME: reduce computational complexity: O(n^2)
+		return this.coordinates
+			.map((c) =>
+				this.coordinates.map((cc) => c.isNeighbor(cc)).some((c) => c === true),
+			)
+			.every((c) => c === true);
 	}
 }
