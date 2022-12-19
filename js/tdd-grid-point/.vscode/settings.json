@@ -1,0 +1,6 @@
+{
+    "vitest.commandLine": "pnpm vitest",
+    "vitest.enable": true,
+    "editor.defaultFormatter": "rome.rome",
+    "editor.formatOnSave": true
+}
