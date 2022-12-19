@@ -59,9 +59,8 @@ describe("GridPoints", () => {
 		it("returns false if GridPoints not contains GridPoint", () => {
 			const coordinatesA = new GridPoint(1, 2);
 			const coordinatesB = new GridPoint(3, 4);
-			const coordinatesC = new GridPoint(4, 5);
 			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
-			expect(gridPoints.isContained(coordinatesC)).toBe(false);
+			expect(gridPoints.isContained(new GridPoint(4, 5))).toBe(false);
 		});
 	});
 
@@ -70,12 +69,14 @@ describe("GridPoints", () => {
 			const coordinatesA = new GridPoint(1, 2);
 			const coordinatesB = new GridPoint(1, 3);
 			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+
 			expect(gridPoints.isConnected()).toBe(true);
 		});
 		it("returns false if GridPoints are not connected", () => {
 			const coordinatesA = new GridPoint(1, 2);
 			const coordinatesB = new GridPoint(3, 4);
 			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+
 			expect(gridPoints.isConnected()).toBe(false);
 		});
 	});
