@@ -105,7 +105,7 @@ describe("GridPoints", () => {
 							coordinatesC,
 							coordinatesD,
 						),
-				).toThrow(Error);
+				).not.toThrow(Error);
 			});
 		});
 	});

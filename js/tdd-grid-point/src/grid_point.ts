@@ -24,9 +24,6 @@ export class GridPoint {
 export class GridPoints {
 	public coordinates: GridPoint[];
 	constructor(...coordinates: GridPoint[]) {
-		if (coordinates.length > 3) {
-			throw new Error("invalid length");
-		}
 		this.coordinates = coordinates;
 	}
 	public isContained(other: GridPoint): boolean {
