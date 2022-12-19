@@ -1,0 +1,16 @@
+{
+  "name": "tdd-grid-point",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rome": "^11.0.0",
+    "vitest": "^0.25.8"
+  }
+}
