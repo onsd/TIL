@@ -126,6 +126,23 @@ describe("GridPoints", () => {
 			expect(gridPoints.isConnected()).toBe(false);
 		});
 	});
+
+	describe("Traversable", () => {
+		it("returns true if Two GridPoints are traversable", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(1, 3);
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+
+			expect(gridPoints.isConnected()).toBe(true); 
+		})
+		it("returns false if Two GridPoints are not traversable", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(3, 4);
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+
+			expect(gridPoints.isConnected()).toBe(false);
+		});
+	})
 });
 
 describe("Sample TestCases", () => {

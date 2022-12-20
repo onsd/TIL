@@ -37,4 +37,10 @@ export class GridPoints {
 			)
 			.every((c) => c === true);
 	}
+	public isTraversable(): boolean {
+		if (this.coordinates.length == 2) {
+			return this.isConnected()
+		} 
+		return false
+	}
 }
