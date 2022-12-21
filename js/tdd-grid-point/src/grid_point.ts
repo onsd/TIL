@@ -26,21 +26,55 @@ export class GridPoints {
 	constructor(...coordinates: GridPoint[]) {
 		this.coordinates = coordinates;
 	}
+
 	public isContained(other: GridPoint): boolean {
 		return this.coordinates.map((c) => c.equals(other)).some((c) => c === true);
 	}
+	
 	public isConnected(): boolean {
 		// FIXME: reduce computational complexity: O(n^2)
 		return this.coordinates
 			.map((c) =>
-				this.coordinates.map((cc) => c.isNeighbor(cc)).some((c) => c === true),
+				this.coordinates
+					.map((cc) => c.isNeighbor(cc))
+					.some((c) => c === true),
 			)
 			.every((c) => c === true);
 	}
-	public isTraversable(): boolean {
-		if (this.coordinates.length == 2) {
-			return this.isConnected()
-		} 
+
+	public isTraversable(): boolean {	
+		const list = this.coordinates.concat()
+
+		for (let index = 0; index < list.length; index++) {
+			const root = list.shift();
+			if (this.traverse(root!, list)){
+				return true
+			}
+			list.push(root!)
+		}
+
 		return false
+	}	
+
+	private traverse(root: GridPoint, list: GridPoint[]):boolean {
+		if(list.length === 0) {
+			return true
+		}
+
+		var flag = false
+		// リストから一つ取り出す
+		while(list.length){
+			const next = list.shift();
+			if (next == undefined) {
+				break
+			}
+			if (!root.isNeighbor(next)){
+				continue
+			}
+			if (this.traverse(next, list)) {
+				flag = true
+			}
+		}
+		return flag
 	}
 }

@@ -133,14 +133,73 @@ describe("GridPoints", () => {
 			const coordinatesB = new GridPoint(1, 3);
 			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
 
-			expect(gridPoints.isConnected()).toBe(true); 
+			expect(gridPoints.isTraversable()).toBe(true); 
+		})
+		it("returns true if Two GridPoints are traversable", () => {
+			const coordinatesA = new GridPoint(1, 3);
+			const coordinatesB = new GridPoint(1, 2);
+
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
+
+			expect(gridPoints.isTraversable()).toBe(true); 
 		})
 		it("returns false if Two GridPoints are not traversable", () => {
 			const coordinatesA = new GridPoint(1, 2);
 			const coordinatesB = new GridPoint(3, 4);
 			const gridPoints = new GridPoints(coordinatesA, coordinatesB);
 
-			expect(gridPoints.isConnected()).toBe(false);
+			expect(gridPoints.isTraversable()).toBe(false);
+		});
+
+		it("returns true if Three GridPoints are traversable", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(1, 3);
+			const coordinatesC = new GridPoint(1, 4);
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB, coordinatesC);
+
+			expect(gridPoints.isTraversable()).toBe(true); 
+		})
+		it("returns false if Three GridPoints are not traversable", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(3, 4);
+			const coordinatesC = new GridPoint(5, 6);
+
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB, coordinatesC);
+
+			expect(gridPoints.isTraversable()).toBe(false);
+		});
+
+		it("returns true if Four GridPoints are traversable", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(1, 3);
+			const coordinatesC = new GridPoint(1, 4);
+			const coordinatesD = new GridPoint(1, 5);
+
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB, coordinatesC, coordinatesD);
+
+			expect(gridPoints.isTraversable()).toBe(true); 
+		})
+		
+		it("returns true if Four GridPoints are traversable", () => {
+			const coordinatesA = new GridPoint(0,0);
+			const coordinatesB = new GridPoint(0,1);
+			const coordinatesC = new GridPoint(1,1);
+			const coordinatesD = new GridPoint(1,0);
+
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB, coordinatesC, coordinatesD);
+
+			expect(gridPoints.isTraversable()).toBe(true); 
+		})
+
+		it("returns false if Three GridPoints are not traversable", () => {
+			const coordinatesA = new GridPoint(1, 2);
+			const coordinatesB = new GridPoint(1, 3);
+			const coordinatesC = new GridPoint(1, 4);
+			const coordinatesD = new GridPoint(1, 6);
+
+			const gridPoints = new GridPoints(coordinatesA, coordinatesB, coordinatesC, coordinatesD);
+
+			expect(gridPoints.isTraversable()).toBe(false);
 		});
 	})
 });
