@@ -9,7 +9,7 @@ type tennisGame1 struct {
 	player2Name string
 }
 
-func NewTennisGame1(player1Name string, player2Name string) *tennisGame1 {
+func NewTennisGame1(player1Name string, player2Name string) TennisGame {
 	game := &tennisGame1{
 		player1Name: player1Name,
 		player2Name: player2Name}

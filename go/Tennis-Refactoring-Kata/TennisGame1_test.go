@@ -94,12 +94,11 @@ func TestGetScoreNameWhenAdvantageOrWin(t *testing.T) {
 		t.Run(sample.expectedScore, func(t *testing.T) {
 			t.Parallel()
 
-			game := NewTennisGame1("player1", "player2")
-			for i := 0; i < sample.player1Score; i++ {
-				game.WonPoint("player1")
-			}
-			for i := 0; i < sample.player2Score; i++ {
-				game.WonPoint("player2")
+			game := tennisGame1{
+				m_score1:    sample.player1Score,
+				m_score2:    sample.player2Score,
+				player1Name: "player1",
+				player2Name: "player2",
 			}
 			score := game.getScoreNameWhenAdvantageOrWin()
 			if score != sample.expectedScore {
@@ -123,12 +122,11 @@ func TestGetScoreSamePoint(t *testing.T) {
 		t.Run(sample.expectedScore, func(t *testing.T) {
 			t.Parallel()
 
-			game := NewTennisGame1("player1", "player2")
-			for i := 0; i < sample.player1Score; i++ {
-				game.WonPoint("player1")
-			}
-			for i := 0; i < sample.player2Score; i++ {
-				game.WonPoint("player2")
+			game := tennisGame1{
+				m_score1:    sample.player1Score,
+				m_score2:    sample.player2Score,
+				player1Name: "player1",
+				player2Name: "player2",
 			}
 			score := game.getScoreSamePoint()
 			if score != sample.expectedScore {
@@ -161,12 +159,11 @@ func TestGetScoreNormal(t *testing.T) {
 		t.Run(sample.expectedScore, func(t *testing.T) {
 			t.Parallel()
 
-			game := NewTennisGame1("player1", "player2")
-			for i := 0; i < sample.player1Score; i++ {
-				game.WonPoint("player1")
-			}
-			for i := 0; i < sample.player2Score; i++ {
-				game.WonPoint("player2")
+			game := tennisGame1{
+				m_score1:    sample.player1Score,
+				m_score2:    sample.player2Score,
+				player1Name: "player1",
+				player2Name: "player2",
 			}
 			score := game.getScoreNormal()
 			if score != sample.expectedScore {
