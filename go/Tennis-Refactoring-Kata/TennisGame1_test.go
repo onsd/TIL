@@ -10,6 +10,7 @@ type testDataSample struct {
 	expectedScore string
 }
 
+// 挙動が変わっていないことを確認するテスト
 func TestTennisGame1(t *testing.T) {
 	var testData = []testDataSample{
 		{0, 0, "Love-All"},
@@ -72,6 +73,7 @@ func TestTennisGame1(t *testing.T) {
 	}
 }
 
+// 切り出した個別の関数が正しく動いているか確認するテスト
 func TestGetScoreNameWhenAdvantageOrWin(t *testing.T) {
 	testData := []testDataSample{
 		{4, 3, "Advantage player1"},
