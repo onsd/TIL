@@ -1,7 +1,6 @@
-package tenniskata_test
+package tenniskata
 
 import (
-	"tenniskata"
 	"testing"
 )
 
@@ -58,7 +57,7 @@ func TestTennisGame1(t *testing.T) {
 		t.Run(sample.expectedScore, func(t *testing.T) {
 			t.Parallel()
 
-			game := tenniskata.NewTennisGame1("player1", "player2")
+			game := NewTennisGame1("player1", "player2")
 			for i := 0; i < sample.player1Score; i++ {
 				game.WonPoint("player1")
 			}
@@ -93,14 +92,14 @@ func TestGetScoreNameWhenAdvantageOrWin(t *testing.T) {
 		t.Run(sample.expectedScore, func(t *testing.T) {
 			t.Parallel()
 
-			game := tenniskata.NewTennisGame1("player1", "player2")
+			game := NewTennisGame1("player1", "player2")
 			for i := 0; i < sample.player1Score; i++ {
 				game.WonPoint("player1")
 			}
 			for i := 0; i < sample.player2Score; i++ {
 				game.WonPoint("player2")
 			}
-			score := game.GetScoreNameWhenAdvantageOrWin()
+			score := game.getScoreNameWhenAdvantageOrWin()
 			if score != sample.expectedScore {
 				t.Errorf("Expected score %s, got %s", sample.expectedScore, score)
 			}
@@ -122,14 +121,14 @@ func TestGetScoreSamePoint(t *testing.T) {
 		t.Run(sample.expectedScore, func(t *testing.T) {
 			t.Parallel()
 
-			game := tenniskata.NewTennisGame1("player1", "player2")
+			game := NewTennisGame1("player1", "player2")
 			for i := 0; i < sample.player1Score; i++ {
 				game.WonPoint("player1")
 			}
 			for i := 0; i < sample.player2Score; i++ {
 				game.WonPoint("player2")
 			}
-			score := game.GetScoreSamePoint()
+			score := game.getScoreSamePoint()
 			if score != sample.expectedScore {
 				t.Errorf("Expected score %s, got %s", sample.expectedScore, score)
 			}
@@ -160,14 +159,14 @@ func TestGetScoreNormal(t *testing.T) {
 		t.Run(sample.expectedScore, func(t *testing.T) {
 			t.Parallel()
 
-			game := tenniskata.NewTennisGame1("player1", "player2")
+			game := NewTennisGame1("player1", "player2")
 			for i := 0; i < sample.player1Score; i++ {
 				game.WonPoint("player1")
 			}
 			for i := 0; i < sample.player2Score; i++ {
 				game.WonPoint("player2")
 			}
-			score := game.GetScoreNormal()
+			score := game.getScoreNormal()
 			if score != sample.expectedScore {
 				t.Errorf("Expected score %s, got %s", sample.expectedScore, score)
 			}

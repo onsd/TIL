@@ -28,18 +28,18 @@ func (game *tennisGame1) WonPoint(playerName string) {
 func (game *tennisGame1) GetScore() string {
 	isSameScore := game.m_score1 == game.m_score2
 	if isSameScore {
-		return game.GetScoreSamePoint()
+		return game.getScoreSamePoint()
 	}
 
 	isAdvantageOrWin := game.m_score1 >= 4 || game.m_score2 >= 4
 	if isAdvantageOrWin {
-		return game.GetScoreNameWhenAdvantageOrWin()
+		return game.getScoreNameWhenAdvantageOrWin()
 	}
 
-	return game.GetScoreNormal()
+	return game.getScoreNormal()
 }
 
-func (game *tennisGame1) GetScoreNameWhenAdvantageOrWin() string {
+func (game *tennisGame1) getScoreNameWhenAdvantageOrWin() string {
 	score := ""
 	minusResult := game.m_score1 - game.m_score2
 	if minusResult == 1 {
@@ -55,7 +55,7 @@ func (game *tennisGame1) GetScoreNameWhenAdvantageOrWin() string {
 	return score
 }
 
-func (game *tennisGame1) GetScoreSamePoint() string {
+func (game *tennisGame1) getScoreSamePoint() string {
 	score := ""
 	switch game.m_score1 {
 	case 0:
@@ -71,7 +71,7 @@ func (game *tennisGame1) GetScoreSamePoint() string {
 	return score
 }
 
-func (game *tennisGame1) GetScoreNormal() string {
+func (game *tennisGame1) getScoreNormal() string {
 	scoreName := func(score int) string {
 		switch score {
 		case 0:
