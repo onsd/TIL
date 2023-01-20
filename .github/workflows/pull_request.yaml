@@ -21,6 +21,8 @@ on:
         description: "Environment to run tests against"
         type: environment
         # required: true
+      sleep:
+        type: boolean
 
 jobs:
   dump:
@@ -36,4 +38,5 @@ jobs:
           LEVEL: ${{ inputs.logLevel }}
           TAGS: ${{ inputs.tags }}
           ENVIRONMENT: ${{ inputs.environment }}
-      - run: sleep 360
+      - if: ${{ inputs.sleep == true }}
+        run: sleep 360
